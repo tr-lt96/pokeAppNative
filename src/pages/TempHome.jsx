@@ -1,21 +1,22 @@
-import { useTheme } from "../components/shared/core";
+import { Button, useTheme } from "../components/shared/core";
 import { PasswordInput } from "../components/shared/core/atoms/fields/PasswordInput";
 import { View, StyleSheet } from "react-native";
 import { Text } from "../components/shared/core";
 import { StatusBar } from "expo-status-bar";
 import { ScreenLayout } from "./ScreenLayout";
+import { useNavigation } from "@react-navigation/native";
 
 const TestComponent = () => {
   const { theme } = useTheme();
+  const { navigate } = useNavigation();
   return (
-    <PasswordInput
-      required
-      radius={"md"}
-      variant={"filled"}
-      label={"Password"}
-      description={"Enter password"}
-      placeholder="********"
-    />
+    <Button
+      onPress={() => {
+        navigate("Register");
+      }}
+    >
+      Navigate to login
+    </Button>
   );
 };
 

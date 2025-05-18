@@ -1,58 +1,58 @@
-import { PasswordInput, Button, Flex } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { themeColor } from "../../../constants";
+// import { useForm } from "@mantine/form";
 import { updateUserPassword } from "../../../functions/auth";
-import { useMessage } from "../../shared/core";
+import { useTheme, PasswordInput, Button, Flex } from "../../shared/core";
+// import { useMessage } from "../../shared/core";
 
 export const ResetPasswordForm = () => {
-  const { setUserAlert } = useMessage();
-  const registerForm = useForm({
-    mode: "uncontrolled",
-    initialValues: {
-      currentPassword: "",
-      password: "",
-      confirmPassword: "",
-    },
+  const { theme } = useTheme();
+  // const { setUserAlert } = useMessage();
+  // const registerForm = useForm({
+  //   mode: "uncontrolled",
+  //   initialValues: {
+  //     currentPassword: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //   },
 
-    validate: {
-      password: (value) => {
-        if (value.length < 8) {
-          return "Password cannot be less than 8 characters.";
-        }
-        if (!/[A-Z]/.test(value)) {
-          return "Where's the uppercase letter?";
-        }
-        if (!/[0-9]/.test(value)) {
-          return "A number, please";
-        }
-        if (!/[!@#$%^&*,.?]/.test(value)) {
-          return "Special character does need to be special - or are you trying to break our system?";
-        }
-      },
-    },
-  });
+  //   validate: {
+  //     password: (value) => {
+  //       if (value.length < 8) {
+  //         return "Password cannot be less than 8 characters.";
+  //       }
+  //       if (!/[A-Z]/.test(value)) {
+  //         return "Where's the uppercase letter?";
+  //       }
+  //       if (!/[0-9]/.test(value)) {
+  //         return "A number, please";
+  //       }
+  //       if (!/[!@#$%^&*,.?]/.test(value)) {
+  //         return "Special character does need to be special - or are you trying to break our system?";
+  //       }
+  //     },
+  //   },
+  // });
 
-  const handleSubmit = (values) => {
-    if (values.confirmPassword !== values.password) {
-      registerForm.setFieldError(
-        "confirmPassword",
-        "Doesn't match above password. Are you sure that you can remember this password?"
-      );
-      return;
-    }
+  // const handleSubmit = (values) => {
+  //   if (values.confirmPassword !== values.password) {
+  //     registerForm.setFieldError(
+  //       "confirmPassword",
+  //       "Doesn't match above password. Are you sure that you can remember this password?"
+  //     );
+  //     return;
+  //   }
 
-    updateUserPassword({
-      currentPassword: values.currentPassword,
-      newPassword: values.password,
-      confirmNewPassword: values.confirmPassword,
-    }).then((result) => {
-      if (result) {
-        setUserAlert(`Successful update your password.`, "success");
-      } else {
-        setUserAlert("Oops, we messed up, can you try again?", "error");
-      }
-    });
-  };
+  //   updateUserPassword({
+  //     currentPassword: values.currentPassword,
+  //     newPassword: values.password,
+  //     confirmNewPassword: values.confirmPassword,
+  //   }).then((result) => {
+  //     if (result) {
+  //       setUserAlert(`Successful update your password.`, "success");
+  //     } else {
+  //       setUserAlert("Oops, we messed up, can you try again?", "error");
+  //     }
+  //   });
+  // };
 
   return (
     <form onSubmit={registerForm.onSubmit(handleSubmit)}>
@@ -64,7 +64,7 @@ export const ResetPasswordForm = () => {
           label={"Current Password"}
           description={"Your ol' password - hope that you still remember it"}
           placeholder="********"
-          {...registerForm.getInputProps("currentPassword")}
+          // {...registerForm.getInputProps("currentPassword")}
         />
         <PasswordInput
           required
@@ -75,7 +75,7 @@ export const ResetPasswordForm = () => {
             "Must have at least a capital character, a number and a special character (e.g. @, #)"
           }
           placeholder="********"
-          {...registerForm.getInputProps("password")}
+          // {...registerForm.getInputProps("password")}
         />
 
         <PasswordInput
@@ -85,16 +85,11 @@ export const ResetPasswordForm = () => {
           label={"Confirm your password"}
           description={"Re-enter your password"}
           placeholder="********"
-          {...registerForm.getInputProps("confirmPassword")}
+          // {...registerForm.getInputProps("confirmPassword")}
         />
 
         <Flex justify={"flex-end"}>
-          <Button
-            color={themeColor.primary}
-            type="submit"
-            radius={"md"}
-            my={"md"}
-          >
+          <Button type="submit" radius={"md"} my={theme.spacing(4)}>
             Update password
           </Button>
         </Flex>

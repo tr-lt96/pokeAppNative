@@ -1,5 +1,6 @@
 import mockTeams from "../_mock/data/teams.json";
 import { TOKEN_KEY } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getAllTeams = async () => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -7,7 +8,7 @@ export const getAllTeams = async () => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY) || "";
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -48,7 +49,7 @@ export const getTeamById = async (teamId, teams = []) => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = (await AsyncStorage.getItem(TOKEN_KEY)) || "";
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -82,7 +83,7 @@ export const addNewTeam = async (teamName) => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/create`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -119,7 +120,7 @@ export const deleteTeam = async (teamId) => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -149,7 +150,7 @@ export const addPokemonToTeam = async (pokemonName, teamId) => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}/pokemon`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -180,7 +181,7 @@ export const evaluatePokemonTeam = async (teamId) => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}/evaluation`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);

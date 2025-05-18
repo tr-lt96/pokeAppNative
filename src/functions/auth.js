@@ -1,4 +1,5 @@
 import { TOKEN_KEY } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const loginUser = async ({ username, password }) => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -84,7 +85,7 @@ export const updateUserPassword = async ({
 
   try {
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/change-password`;
-    const token = window.localStorage.getItem(TOKEN_KEY) || "";
+    const token = (await AsyncStorage.getItem(TOKEN_KEY)) || "";
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
@@ -122,7 +123,7 @@ export const logoutUser = async () => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/logout`;
     const headers = new Headers();
     headers.append("Content-Type", "application/json");

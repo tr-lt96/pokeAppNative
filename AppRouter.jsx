@@ -1,6 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TempHome } from "./src/pages/TempHome";
+import { LoginPage } from "./src/pages/auth/LoginPage";
+import { RegisterPage } from "./src/pages/auth/RegisterPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,8 +12,8 @@ export const AppRouter = () => {
       <Stack.Navigator>
         {/* To be removed */}
         <Stack.Screen name="Home" component={TempHome} />
-        <Stack.Screen name="Login" component={TempHome} />
-        <Stack.Screen name="Register" component={TempHome} />
+        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name="Register" component={RegisterPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

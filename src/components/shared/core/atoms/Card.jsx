@@ -8,7 +8,7 @@ export const Card = ({ children, style, radius = "md", ...cardProps }) => {
 
   return (
     <Container
-      bg="white"
+      bgc="white"
       p={theme.spacing(2)}
       style={{
         borderRadius: theme.radius[radius],

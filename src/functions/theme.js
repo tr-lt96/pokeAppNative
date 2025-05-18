@@ -24,6 +24,7 @@ const MantineSpacingProps = {
 
 const MantineColorProps = {
   bg: "background",
+  bgc: "backgroundColor",
   c: "color",
 };
 

@@ -1,16 +1,18 @@
 import { useTheme } from "../components/shared/core";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 export const ScreenLayout = ({ children }) => {
   const { theme } = useTheme();
   return (
-    <View
+    <ScrollView
+      automaticallyAdjustKeyboardInsets
       style={{
         paddingInline: theme.spacing(8),
         flex: 1,
       }}
     >
       {children}
-    </View>
+    </ScrollView>
   );
 };

@@ -1,90 +1,98 @@
-import { TextInput, PasswordInput, Button, Flex } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { themeColor } from "../../../constants";
+//  import { useForm } from "@mantine/form";
+import { View } from "react-native";
 import { registerUser } from "../../../functions/auth";
-import { useMessage } from "../../shared/core";
-import { useNavigate } from "react-router";
+// import { useMessage } from "../../shared/core";
+// import { useNavigate } from "react-router";
+import {
+  useTheme,
+  TextInput,
+  PasswordInput,
+  Button,
+  Flex,
+} from "../../shared/core";
 
 export const RegisterForm = () => {
-  const { setUserAlert } = useMessage();
-  const navigate = useNavigate();
+  const { theme } = useTheme();
+  // const { setUserAlert } = useMessage();
+  // const navigate = useNavigate();
 
-  const registerForm = useForm({
-    mode: "uncontrolled",
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+  // const registerForm = useForm({
+  //   mode: "uncontrolled",
+  //   initialValues: {
+  //     username: "",
+  //     email: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //   },
 
-    validate: {
-      username: (value) =>
-        /^[a-zA-Z0-9_.-]*$/.test(value)
-          ? null
-          : "Invalid username, must have only non-spacing character and _,.,-",
-      email: (value) =>
-        /^[\w-\.]+@([\w-]+\.)+[\w-]+$/.test(value) ? null : "Invalid email",
-      password: (value) => {
-        if (value.length < 8) {
-          return "Password cannot be less than 8 characters.";
-        }
-        if (!/[A-Z]/.test(value)) {
-          return "Where's the uppercase letter?";
-        }
-        if (!/[0-9]/.test(value)) {
-          return "A number, please";
-        }
-        if (!/[!@#$%^&*,.?]/.test(value)) {
-          return "Special character does need to be special - or are you trying to break our system?";
-        }
-      },
-    },
-  });
+  //   validate: {
+  //     username: (value) =>
+  //       /^[a-zA-Z0-9_.-]*$/.test(value)
+  //         ? null
+  //         : "Invalid username, must have only non-spacing character and _,.,-",
+  //     email: (value) =>
+  //       /^[\w-\.]+@([\w-]+\.)+[\w-]+$/.test(value) ? null : "Invalid email",
+  //     password: (value) => {
+  //       if (value.length < 8) {
+  //         return "Password cannot be less than 8 characters.";
+  //       }
+  //       if (!/[A-Z]/.test(value)) {
+  //         return "Where's the uppercase letter?";
+  //       }
+  //       if (!/[0-9]/.test(value)) {
+  //         return "A number, please";
+  //       }
+  //       if (!/[!@#$%^&*,.?]/.test(value)) {
+  //         return "Special character does need to be special - or are you trying to break our system?";
+  //       }
+  //     },
+  //   },
+  // });
 
-  const handleSubmit = (values) => {
-    if (!values) {
-      return;
-    }
+  // const handleSubmit = (values) => {
+  //   if (!values) {
+  //     return;
+  //   }
 
-    if (values.confirmPassword !== values.password) {
-      registerForm.setFieldError(
-        "confirmPassword",
-        "Doesn't match above password. Are you sure that you can remember this password?"
-      );
-      return;
-    }
+  //   if (values.confirmPassword !== values.password) {
+  //     registerForm.setFieldError(
+  //       "confirmPassword",
+  //       "Doesn't match above password. Are you sure that you can remember this password?"
+  //     );
+  //     return;
+  //   }
 
-    registerUser({
-      username: values.username,
-      email: values.email,
-      password: values.password,
-    }).then((result) => {
-      if (!result) {
-        setUserAlert(
-          "Awrr, we want to welcome you in, but it seems like our system have trouble registering you. Have you registered with us before?",
-          "error"
-        );
-      } else {
-        setUserAlert(
-          `Successful registering yourself with these credentials, we just need to make sure you remember these credentials (definitely not a test)`,
-          "success"
-        );
-        navigate("/login");
-      }
-    });
-  };
+  //   registerUser({
+  //     username: values.username,
+  //     email: values.email,
+  //     password: values.password,
+  //   }).then((result) => {
+  //     if (!result) {
+  //       setUserAlert(
+  //         "Awrr, we want to welcome you in, but it seems like our system have trouble registering you. Have you registered with us before?",
+  //         "error"
+  //       );
+  //     } else {
+  //       setUserAlert(
+  //         `Successful registering yourself with these credentials, we just need to make sure you remember these credentials (definitely not a test)`,
+  //         "success"
+  //       );
+  //       navigate("/login");
+  //     }
+  //   });
+  // };
 
   return (
-    <form onSubmit={registerForm.onSubmit(handleSubmit)}>
-      <Flex direction={"column"} gap={"sm"}>
+    // <form onSubmit={registerForm.onSubmit(handleSubmit)}>
+    <View>
+      <Flex direction={"column"} gap={theme.spacing(3)}>
         <TextInput
           required
           variant={"filled"}
           label={"Trainer's name"}
           placeholder="Your name"
           description={'Characters, numbers and ".", "_", "-" only'}
-          {...registerForm.getInputProps("username")}
+          // {...registerForm.getInputProps("username")}
         />
 
         <TextInput
@@ -93,7 +101,7 @@ export const RegisterForm = () => {
           label={"Email"}
           description={"Enter your email"}
           placeholder="Your email"
-          {...registerForm.getInputProps("email")}
+          // {...registerForm.getInputProps("email")}
         />
 
         <PasswordInput
@@ -105,7 +113,7 @@ export const RegisterForm = () => {
             "Must have at least a capital character, a number and a special character (e.g. @, #)"
           }
           placeholder="********"
-          {...registerForm.getInputProps("password")}
+          // {...registerForm.getInputProps("password")}
         />
 
         <PasswordInput
@@ -115,19 +123,13 @@ export const RegisterForm = () => {
           label={"Confirm your password"}
           description={"Re-enter your password"}
           placeholder="********"
-          {...registerForm.getInputProps("confirmPassword")}
+          // {...registerForm.getInputProps("confirmPassword")}
         />
 
-        <Button
-          color={themeColor.primary}
-          type="submit"
-          fullWidth
-          radius={"md"}
-          my={"md"}
-        >
+        <Button type="submit" fullWidth radius={"md"} my={theme.spacing(4)}>
           Register
         </Button>
       </Flex>
-    </form>
+    </View>
   );
 };

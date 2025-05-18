@@ -1,5 +1,13 @@
 export const TYPOGRAPHY_VARIANT = {
   // title
+  "heading-sm": {
+    fontWeight: 600,
+    fontSize: 16,
+  },
+  "heading-sm-strong": {
+    fontWeight: 900,
+    fontSize: 16,
+  },
   "heading-md": {
     fontWeight: 600,
     fontSize: 18,
@@ -40,6 +48,14 @@ export const TYPOGRAPHY_VARIANT = {
   "body-md-strong": {
     fontWeight: 800,
     fontSize: 14,
+  },
+  "body-lg": {
+    fontWeight: 500,
+    fontSize: 16,
+  },
+  "body-lg-strong": {
+    fontWeight: 800,
+    fontSize: 16,
   },
   //labels
   "label-sm": {

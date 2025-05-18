@@ -1,4 +1,5 @@
 import { TOKEN_KEY } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getUser = async () => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -9,7 +10,7 @@ export const getUser = async () => {
   }
 
   try {
-    const token = window.localStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/userInformation`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);

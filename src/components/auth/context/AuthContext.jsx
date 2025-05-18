@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { getUser } from "../../../functions/user";
-import { useLocation, useNavigate } from "react-router";
 import { getAllTeams } from "../../../functions/team";
+// import { useLocation, useNavigate } from "react-router";
 
 const initUser = {
   username: "",
@@ -25,8 +25,8 @@ export const UserProvider = ({ children }) => {
   });
 
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   const setupUserContext = async () => {
     setLoading(true);
@@ -35,9 +35,9 @@ export const UserProvider = ({ children }) => {
 
     if (!userData) {
       setLoading(false);
-      if (location.pathname !== "/login" && location.pathname !== "/register") {
-        navigate("/login");
-      }
+      // if (location.pathname !== "/login" && location.pathname !== "/register") {
+      //   navigate("/login");
+      // }
       return false;
     }
 

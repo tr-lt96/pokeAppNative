@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { resolveStyleProps } from "../../../../functions/theme";
 import { useTheme } from "../contexts/ThemeProvider";
 
-export const Container = ({ chilren, style = {}, ...containerProps }) => {
+export const Container = ({ children, style = {}, ...containerProps }) => {
   const { theme } = useTheme();
   const resolvedStyle = {
     padding: 0,
@@ -16,7 +16,7 @@ export const Container = ({ chilren, style = {}, ...containerProps }) => {
         ...style,
       }}
     >
-      {chilren}
+      {children}
     </View>
   );
 };
