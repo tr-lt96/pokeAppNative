@@ -1,0 +1,103 @@
+import React from "react";
+import { Pressable } from "react-native";
+import {
+  getColorWithOpacity,
+  getThemeTokenFromColor,
+  resolveStyleProps,
+} from "../../../../../functions/theme";
+import { useTheme } from "../../contexts/ThemeProvider";
+import { Text } from "../Text";
+
+function getButtonTextStyle({ theme, color, variant }) {
+  const variantTextColor =
+    variant === "light"
+      ? getThemeTokenFromColor(color, theme)
+      : theme.colors.white;
+
+  return {
+    color: variantTextColor,
+    textAlign: "center",
+  };
+}
+
+const ButtonText = ({ buttonText, variant, color }) => {
+  const { theme } = useTheme();
+
+  if (typeof buttonText !== "string") {
+    return null;
+  }
+
+  const textStyle = getButtonTextStyle({ theme, color, variant });
+
+  return (
+    <Text variant="label-md" style={textStyle}>
+      {buttonText}
+    </Text>
+  );
+};
+
+function getButtonStyle({
+  theme,
+  color,
+  radius,
+  fullWidth,
+  variant,
+  style,
+  ...restProps
+}) {
+  const baseStyles = resolveStyleProps(restProps, theme);
+
+  const backgroundColor = getThemeTokenFromColor(color, theme);
+  const variantBackgroundColor =
+    variant === "light"
+      ? getColorWithOpacity(backgroundColor, 0.2)
+      : getThemeTokenFromColor(color, theme);
+
+  return {
+    padding: 12,
+    ...baseStyles,
+    backgroundColor: variantBackgroundColor,
+    borderRadius: theme.radius[radius],
+    width: fullWidth ? "100%" : baseStyles.width || "fit-content",
+    ...style,
+  };
+}
+
+export const Button = (buttonProps) => {
+  const { theme } = useTheme();
+  // Accept only children with type string or element
+  const {
+    children,
+    color = "primary",
+    radius = "md",
+    fullWidth,
+    variant = "filled",
+    ...restProps
+  } = buttonProps;
+
+  if (typeof children !== "string" && !React.isValidElement(children)) {
+    return null;
+  }
+
+  const buttonStyle = getButtonStyle({
+    theme,
+    color,
+    radius,
+    fullWidth,
+    variant,
+    ...restProps,
+  });
+
+  const ButtonContent =
+    typeof children === "string" ? (
+      <ButtonText variant={variant} color={color} buttonText={children} />
+    ) : (
+      children
+    );
+
+  return (
+    <Pressable style={buttonStyle} {...restProps}>
+      {ButtonContent}
+    </Pressable>
+  );
+};

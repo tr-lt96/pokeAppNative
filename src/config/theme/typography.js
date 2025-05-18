@@ -25,6 +25,14 @@ export const TYPOGRAPHY_VARIANT = {
     fontSize: 28,
   },
   // body
+  "body-sm": {
+    fontWeight: 500,
+    fontSize: 12,
+  },
+  "body-sm-strong": {
+    fontWeight: 800,
+    fontSize: 12,
+  },
   "body-md": {
     fontWeight: 500,
     fontSize: 14,
