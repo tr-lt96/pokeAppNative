@@ -4,7 +4,7 @@ import { Container } from "../layouts/Container";
 
 export const Card = ({ children, style, radius = "md", ...cardProps }) => {
   const { theme } = useTheme();
-  const resolvedStyle = resolveStyleProps(cardProps);
+  const resolvedStyle = resolveStyleProps(cardProps, theme);
 
   return (
     <Container

@@ -9,6 +9,7 @@ export const BaseInput = ({ radius = "md", style = {}, ...inputProps }) => {
 
   const baseInputStyle = {
     ...theme.typography["body-md"],
+    width: "100%",
     backgroundColor: theme.colors.gray[1],
     paddingInline: theme.spacing(3),
     minHeight: 36,

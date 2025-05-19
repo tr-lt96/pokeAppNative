@@ -12,9 +12,13 @@ export const transformPokeTypeArrToValueMap = (defaultValue = false) => {
   }, {});
 };
 
-export const getPokemonDisplayName = (name) => {
-  if (typeof name  !== 'string'){
-    return name
+export const capitalise = (str) => {
+  if (typeof str !== "string") {
+    return str;
   }
-  return name[0].toUpperCase() + name.substring(1).toLowerCase();
-}
+  return str[0].toUpperCase() + str.substring(1).toLowerCase();
+};
+
+export const getPokemonDisplayName = (name) => {
+  return capitalise(name);
+};

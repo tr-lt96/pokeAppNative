@@ -16,9 +16,9 @@
         "spriteUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png"
       },
       {
-        "name": "pidgeot",
-        "pokeId": 60,
-        "types": ["flying"],
+        "name": "beedrill",
+        "pokeId": 15,
+        "types": ["flying", "bug"],
         "spriteUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png"
       }
     ]

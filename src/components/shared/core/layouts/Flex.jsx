@@ -42,6 +42,7 @@ export const Flex = ({ children, style = {}, ...flexProps }) => {
   return (
     <View
       style={{
+        flexDirection: "row",
         ...flexStyle,
         ...style,
         display: "flex",

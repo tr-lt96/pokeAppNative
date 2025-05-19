@@ -1,22 +1,68 @@
-import { Button, useTheme } from "../components/shared/core";
+import { Badge, Button, useTheme, Flex } from "../components/shared/core";
 import { PasswordInput } from "../components/shared/core/atoms/fields/PasswordInput";
 import { View, StyleSheet } from "react-native";
 import { Text } from "../components/shared/core";
 import { StatusBar } from "expo-status-bar";
 import { ScreenLayout } from "./ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
+import {
+  PokeIdBadge,
+  PokemonInfoCard,
+  TypeBadge,
+} from "../components/shared/info";
+import { POKE_TYPE_LIST } from "../constants";
+
+const testPokemons = [
+  {
+    name: "pikachu",
+    pokeId: 25,
+    types: ["electric", "steel"],
+    spriteUrl:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+  },
+  {
+    name: "poliwag",
+    pokeId: 60,
+    types: ["water"],
+    spriteUrl:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png",
+  },
+  {
+    name: "beedrill",
+    pokeId: 15,
+    types: ["flying", "bug"],
+    spriteUrl:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png",
+  },
+];
 
 const TestComponent = () => {
   const { theme } = useTheme();
   const { navigate } = useNavigation();
   return (
-    <Button
-      onPress={() => {
-        navigate("Register");
-      }}
-    >
-      Navigate to login
-    </Button>
+    <>
+      <Button
+        onPress={() => {
+          navigate("Register");
+        }}
+      >
+        Navigate to register
+      </Button>
+      <Button
+        onPress={() => {
+          navigate("PokemonSearch");
+        }}
+      >
+        Navigate to pokeSearch
+      </Button>
+      <Badge mt={theme.spacing(1)} variant="light">
+        Fighting
+      </Badge>
+      <Flex wrap>
+        <PokemonInfoCard {...testPokemons[0]}></PokemonInfoCard>
+        <PokemonInfoCard {...testPokemons[1]}></PokemonInfoCard>
+      </Flex>
+    </>
   );
 };
 
@@ -36,7 +82,7 @@ export const TempHome = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -81,4 +127,3 @@ const styles = StyleSheet.create({
 // Modal
 // Rating
 // Progress
-// Rating

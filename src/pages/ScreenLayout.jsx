@@ -8,7 +8,7 @@ export const ScreenLayout = ({ children }) => {
     <ScrollView
       automaticallyAdjustKeyboardInsets
       style={{
-        paddingInline: theme.spacing(8),
+        paddingInline: theme.spacing(4),
         flex: 1,
       }}
     >
