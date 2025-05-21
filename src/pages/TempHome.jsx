@@ -1,4 +1,4 @@
-import { Badge, Button, useTheme, Flex } from "../components/shared/core";
+import { Badge, Button, useTheme, Flex, Chip } from "../components/shared/core";
 import { PasswordInput } from "../components/shared/core/atoms/fields/PasswordInput";
 import { View, StyleSheet } from "react-native";
 import { Text } from "../components/shared/core";
@@ -55,9 +55,9 @@ const TestComponent = () => {
       >
         Navigate to pokeSearch
       </Button>
-      <Badge mt={theme.spacing(1)} variant="light">
-        Fighting
-      </Badge>
+      <Chip color="red.5" radius="sm">
+        fighting
+      </Chip>
       <Flex wrap>
         <PokemonInfoCard {...testPokemons[0]}></PokemonInfoCard>
         <PokemonInfoCard {...testPokemons[1]}></PokemonInfoCard>

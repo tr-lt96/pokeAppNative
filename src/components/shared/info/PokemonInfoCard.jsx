@@ -4,6 +4,8 @@ import { TypeInfo } from "./TypeInfo";
 import { PokeIdBadge } from "./PokeIdBadge";
 import { getPokemonDisplayName } from "../../../functions/utils";
 import { Link } from "@react-navigation/native";
+import { useWindowDimensions } from "react-native";
+import { useMemo } from "react";
 
 /**
  * @typedef {{
@@ -24,9 +26,11 @@ export const PokemonInfoCard = ({
 }) => {
   const { theme } = useTheme();
   const displayName = getPokemonDisplayName(name);
+  const { width } = useWindowDimensions();
+  const calculatedWidth = useMemo(() => width / 2 - theme.spacing(8), [width]);
 
   return (
-    <Container w={"50%"} h={"100%"} px={theme.spacing(1)}>
+    <Container w={calculatedWidth}>
       <Link screen={"PokemonInfo"} params={{ pokemonName: name }}>
         <Card flex={1} radius={"md"} w={"100%"} h={"100%"}>
           <Flex direction={"row-reverse"} w={"100%"}>

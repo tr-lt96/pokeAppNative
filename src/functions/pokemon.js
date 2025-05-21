@@ -1,4 +1,5 @@
 import { TOKEN_KEY } from "../constants";
+import teams from "../_mock/data/teams.json";
 
 export const getPokemonDataFromPokemonId = async (pokemonNameId) => {
   const result = await fetch(
@@ -60,7 +61,10 @@ export const getPokemonData = async (pokemonNameId) => {
 
 export const getAllPokemonData = async ({ limit, offset }) => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
-    return [];
+    return {
+      results: teams[0].pokemons,
+      total: teams[0].pokemons.length,
+    };
   }
 
   try {
@@ -88,7 +92,10 @@ export const getAllPokemonData = async ({ limit, offset }) => {
 
 export const getPokemonByTypeData = async (type, { limit, offset }) => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
-    return [];
+    return {
+      results: teams[0].pokemons,
+      total: teams[0].pokemons.length,
+    };
   }
 
   try {

@@ -63,6 +63,15 @@ function getButtonStyle({
   };
 }
 
+function getButtonPressStyle({ theme, color }) {
+  const backgroundColor = getThemeTokenFromColor(color, theme);
+  const pressedBackgroundColor = getColorWithOpacity(backgroundColor, 0.5);
+
+  return {
+    backgroundColor: pressedBackgroundColor,
+  };
+}
+
 export const Button = (buttonProps) => {
   const { theme } = useTheme();
   // Accept only children with type string or element
@@ -88,6 +97,8 @@ export const Button = (buttonProps) => {
     ...restProps,
   });
 
+  const buttonPressStyle = getButtonPressStyle({ theme, color });
+
   const ButtonContent =
     typeof children === "string" ? (
       <ButtonText variant={variant} color={color} buttonText={children} />
@@ -96,7 +107,13 @@ export const Button = (buttonProps) => {
     );
 
   return (
-    <Pressable style={buttonStyle} {...restProps}>
+    <Pressable
+      style={({ pressed }) => ({
+        ...buttonStyle,
+        ...(pressed ? buttonPressStyle : {}),
+      })}
+      {...restProps}
+    >
       {ButtonContent}
     </Pressable>
   );

@@ -21,7 +21,10 @@ export const TextInput = ({
       }}
     >
       <BaseInput.Label label={label} description={description} />
-      <BaseInput mt={theme.spacing(2)} {...textInputProps} />
+      <BaseInput
+        mt={label || description ? theme.spacing(2) : 0}
+        {...textInputProps}
+      />
     </View>
   );
 };

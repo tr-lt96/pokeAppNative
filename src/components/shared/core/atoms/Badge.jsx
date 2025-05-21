@@ -102,27 +102,3 @@ export const Badge = ({
     </Container>
   );
 };
-
-{
-  /* <Badge
-          bg={"transparent"}
-          p={"sm"}
-          radius={"sm"}
-          style={{ cursor: "pointer" }}
-        ></Badge> */
-}
-
-{
-  /* <Badge
-            key={`pokemon-${index}-${ability}`}
-            color={themeColor.primary}
-            size="sm"
-            radius={"sm"}
-          ></Badge> */
-}
-
-{
-  /* <Badge color={resolveVariant} size={size} radius={"sm"}></Badge> */
-}
-
-// size affect text and padding

@@ -5,6 +5,7 @@ import { LoginPage } from "./src/pages/auth/LoginPage";
 import { RegisterPage } from "./src/pages/auth/RegisterPage";
 import { View, Text } from "react-native";
 import { capitalise } from "./src/functions/utils";
+import { PokemonSearchPage } from "./src/pages/search/PokemonSearchPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export const AppRouter = () => {
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen
           name="PokemonSearch"
-          component={TempHome}
+          component={PokemonSearchPage}
           options={{
             title: "Search Pokemon",
           }}
