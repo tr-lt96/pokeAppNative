@@ -9,5 +9,6 @@ export * from "./atoms/Text";
 export * from "./atoms/Badge";
 export * from "./atoms/Image";
 export * from "./atoms/Chip";
+export * from "./atoms/Progress";
 export * from "./layouts/Flex";
 export * from "./layouts/Container";

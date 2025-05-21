@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TempHome } from "./src/pages/TempHome";
 import { LoginPage } from "./src/pages/auth/LoginPage";
 import { RegisterPage } from "./src/pages/auth/RegisterPage";
-import { View, Text } from "react-native";
 import { capitalise } from "./src/functions/utils";
 import { PokemonSearchPage } from "./src/pages/search/PokemonSearchPage";
+import { PokemonInfoPage } from "./src/pages/pokemon-info/PokemonInfoPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +27,7 @@ export const AppRouter = () => {
         />
         <Stack.Screen
           name="PokemonInfo"
-          component={TempHome}
+          component={PokemonInfoPage}
           options={({ route }) => ({
             title: `${capitalise(route.params.pokemonName)} Info`,
           })}
