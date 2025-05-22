@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TempHome } from "./src/pages/TempHome";
 import { LoginPage } from "./src/pages/auth/LoginPage";
 import { RegisterPage } from "./src/pages/auth/RegisterPage";
 import { capitalise } from "./src/functions/utils";
@@ -12,6 +11,7 @@ import { screenNames } from "./src/constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, useTheme } from "./src/components/shared/core";
+import { UserPage } from "./src/pages/user/UserPage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -111,7 +111,7 @@ const NavigationTabs = () => {
       />
       <Tab.Screen
         name={screenNames.user}
-        component={TempHome}
+        component={UserPage}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabBarIcon name="person" focused={focused} />

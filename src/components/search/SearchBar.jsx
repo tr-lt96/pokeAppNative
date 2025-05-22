@@ -1,4 +1,5 @@
 // import { useForm } from "@mantine/form";
+import { useForm, Controller } from "react-hook-form";
 import { searchPokemonByNameId } from "../../functions/pokemon";
 import { usePokemonSearchContext } from "./context/PokemonSearchContext";
 import {
@@ -28,6 +29,20 @@ export const SearchBar = () => {
   const { setSearchQuery, setResultItems, setSearchMode, setLoading } =
     usePokemonSearchContext();
   const { setUserAlert } = useMessage();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+    setError,
+  } = useForm({
+    defaultValues: {
+      pokemonName: "",
+    },
+  });
+
   // const searchForm = useForm({
   //   initialValues: {
   //     pokemonName: "",
@@ -42,45 +57,45 @@ export const SearchBar = () => {
   //   },
   // });
 
-  // const handleSearch = (values) => {
-  //   setLoading(true);
-  //   setSearchMode("name");
-  //   let searchQuery = values.pokemonName;
-  //   // Sanitise search input
-  //   if (!/^[a-zA-Z-]*$/.test(values.pokemonName)) {
-  //     // Probaly user is searching pokemon via a pokemon number
-  //     searchQuery = parseInt(values.pokemonName);
-  //     if (isNaN(searchQuery)) {
-  //       searchForm.setFieldError(
-  //         "pokemonName",
-  //         "You know that's not a valid pokemon name or number - are you trying to break the system?"
-  //       );
-  //       return;
-  //     }
-  //   }
+  const handleSearch = (values) => {
+    setLoading(true);
+    setSearchMode("name");
+    let searchQuery = values.pokemonName;
+    // Sanitise search input
+    if (!/^[a-zA-Z-]*$/.test(values.pokemonName)) {
+      // Probaly user is searching pokemon via a pokemon number
+      searchQuery = parseInt(values.pokemonName);
+      if (isNaN(searchQuery)) {
+        setError("pokemonName", {
+          message:
+            "You know that's not a valid pokemon name or number - are you trying to break the system?",
+        });
+        return;
+      }
+    }
 
-  //   setSearchQuery(searchQuery);
+    setSearchQuery(searchQuery);
 
-  //   searchPokemonByNameId(searchQuery)
-  //     .then((pokemonData) => {
-  //       if (pokemonData) {
-  //         setResultItems([pokemonData]);
-  //       } else {
-  //         setUserAlert(
-  //           "Pokemon not found, are you sure it's a pokemon ?",
-  //           "error"
-  //         );
-  //       }
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setUserAlert(
-  //         "Pokedex search doesn't seems to be working. Perhaps it went out of battery?",
-  //         "error"
-  //       );
-  //       setLoading(false);
-  //     });
-  // };
+    searchPokemonByNameId(searchQuery)
+      .then((pokemonData) => {
+        if (pokemonData) {
+          setResultItems([pokemonData]);
+        } else {
+          setUserAlert(
+            "Pokemon not found, are you sure it's a pokemon ?",
+            "error"
+          );
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setUserAlert(
+          "Pokedex search doesn't seems to be working. Perhaps it went out of battery?",
+          "error"
+        );
+        setLoading(false);
+      });
+  };
 
   const handleSwitchSearchType = () => {
     setResultItems([]);
@@ -100,20 +115,41 @@ export const SearchBar = () => {
       <Flex
         gap={theme.spacing(2)}
         w={"100%"}
-        align={"center"}
+        align={"flex-start"}
         justify={"start"}
       >
-        <TextInput
-          required
-          radius={"md"}
-          placeholder="Search pokemon by name"
-          w={"auto"}
-          h={48}
-          flex={1}
-          // {...searchForm.getInputProps("pokemonName")}
+        <Controller
+          control={control}
+          render={({ field: { onBlur, onChange, value } }) => (
+            <TextInput
+              radius={"md"}
+              placeholder="Search pokemon by name"
+              w={"auto"}
+              mih={48}
+              flex={1}
+              value={value}
+              onChangeText={(value) => onChange(value)}
+              onBlur={onBlur}
+              errorMessage={errors?.pokemonName?.message}
+            />
+          )}
+          name="pokemonName"
+          rules={{
+            required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9-]*$/,
+              message: "Invalid pokemon name or ID",
+            },
+          }}
         />
+
         <Flex align={"center"} gap={theme.spacing(2)}>
-          <ActionIcon radius={"md"} type="submit" size={48}>
+          <ActionIcon
+            radius={"md"}
+            type="submit"
+            size={48}
+            onPress={handleSubmit(handleSearch)}
+          >
             <MaterialIcons name={"search"} size={16} />
           </ActionIcon>
           <ActionIcon

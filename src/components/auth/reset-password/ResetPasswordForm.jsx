@@ -55,45 +55,45 @@ export const ResetPasswordForm = () => {
   // };
 
   return (
-    <form onSubmit={registerForm.onSubmit(handleSubmit)}>
-      <Flex direction={"column"} gap={"sm"}>
-        <PasswordInput
-          required
-          size="sm"
-          variant={"filled"}
-          label={"Current Password"}
-          description={"Your ol' password - hope that you still remember it"}
-          placeholder="********"
-          // {...registerForm.getInputProps("currentPassword")}
-        />
-        <PasswordInput
-          required
-          size="sm"
-          variant={"filled"}
-          label={"New Password"}
-          description={
-            "Must have at least a capital character, a number and a special character (e.g. @, #)"
-          }
-          placeholder="********"
-          // {...registerForm.getInputProps("password")}
-        />
+    // <form onSubmit={registerForm.onSubmit(handleSubmit)}>
+    <Flex direction={"column"} gap={theme.spacing(3)}>
+      <PasswordInput
+        required
+        size="sm"
+        variant={"filled"}
+        label={"Current Password"}
+        description={"Your ol' password - hope that you still remember it"}
+        placeholder="********"
+        // {...registerForm.getInputProps("currentPassword")}
+      />
+      <PasswordInput
+        required
+        size="sm"
+        variant={"filled"}
+        label={"New Password"}
+        description={
+          "Must have at least a capital character, a number and a special character (e.g. @, #)"
+        }
+        placeholder="********"
+        // {...registerForm.getInputProps("password")}
+      />
 
-        <PasswordInput
-          required
-          size="sm"
-          variant={"filled"}
-          label={"Confirm your password"}
-          description={"Re-enter your password"}
-          placeholder="********"
-          // {...registerForm.getInputProps("confirmPassword")}
-        />
+      <PasswordInput
+        required
+        size="sm"
+        variant={"filled"}
+        label={"Confirm your password"}
+        description={"Re-enter your password"}
+        placeholder="********"
+        // {...registerForm.getInputProps("confirmPassword")}
+      />
 
-        <Flex justify={"flex-end"}>
-          <Button type="submit" radius={"md"} my={theme.spacing(4)}>
-            Update password
-          </Button>
-        </Flex>
+      <Flex justify={"flex-end"}>
+        <Button type="submit" radius={"md"} my={theme.spacing(4)}>
+          Update password
+        </Button>
       </Flex>
-    </form>
+    </Flex>
+    // </form>
   );
 };
