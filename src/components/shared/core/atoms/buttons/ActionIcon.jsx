@@ -29,7 +29,7 @@ export const ActionIcon = (buttonProps) => {
     typeof size === "number" ? { w: size, h: size } : { w: 32, h: 32 };
 
   const ButtonContent = React.cloneElement(children, {
-    color: iconColor,
+    color: children?.props?.color || iconColor,
   });
 
   return (

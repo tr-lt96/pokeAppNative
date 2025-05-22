@@ -55,8 +55,8 @@ function getButtonStyle({
 
   return {
     padding: 12,
-    ...baseStyles,
     backgroundColor: variantBackgroundColor,
+    ...baseStyles,
     borderRadius: theme.radius[radius],
     width: fullWidth ? "100%" : baseStyles.width || "fit-content",
     ...style,

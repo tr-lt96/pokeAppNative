@@ -1,4 +1,5 @@
 export * from "./poke-type-list";
+export * from "./screen-path";
 
 // Styles constant
 export const themeColor = {

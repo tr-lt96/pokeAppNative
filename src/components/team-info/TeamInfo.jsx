@@ -1,3 +1,4 @@
+import { screenNames } from "../../constants";
 import { Text, Button, Container, Flex, useTheme } from "../shared/core";
 import { PokemonInfoCard } from "../shared/info";
 import { useNavigation } from "@react-navigation/native";
@@ -8,7 +9,7 @@ export const TeamInfo = ({ team }) => {
   const { navigate } = useNavigation();
 
   const handleToSearch = () => {
-    navigate("PokemonSearch");
+    navigate(screenNames.pokemonSearch);
   };
 
   return (

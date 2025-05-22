@@ -8,41 +8,142 @@ import { PokemonSearchPage } from "./src/pages/search/PokemonSearchPage";
 import { PokemonInfoPage } from "./src/pages/pokemon-info/PokemonInfoPage";
 import { TeamListPage } from "./src/pages/team-info/TeamListPage";
 import { TeamInfoPage } from "./src/pages/team-info/TeamInfoPage";
+import { screenNames } from "./src/constants";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Text, useTheme } from "./src/components/shared/core";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+const SearchStack = createNativeStackNavigator();
+const TeamsStack = createNativeStackNavigator();
+
+const SearchNavigationStack = () => {
+  return (
+    <SearchStack.Navigator initialRouteName={screenNames.pokemonSearch}>
+      <SearchStack.Screen
+        name={screenNames.pokemonSearch}
+        component={PokemonSearchPage}
+        options={{
+          title: "Search Pokemon",
+        }}
+      />
+      <SearchStack.Screen
+        name={screenNames.pokemonInfo}
+        component={PokemonInfoPage}
+        options={({ route }) => ({
+          title: `${capitalise(route.params.pokemonName)} Info`,
+        })}
+      />
+    </SearchStack.Navigator>
+  );
+};
+
+const TeamsNavigationStack = () => {
+  return (
+    <TeamsStack.Navigator initialRouteName={screenNames.teamList}>
+      <TeamsStack.Screen name={screenNames.teamList} component={TeamListPage} />
+      <TeamsStack.Screen
+        name={screenNames.teamInfo}
+        component={TeamInfoPage}
+        options={{
+          title: "Team Info",
+        }}
+      />
+      <TeamsStack.Screen
+        name={screenNames.pokemonInfo}
+        component={PokemonInfoPage}
+        options={({ route }) => ({
+          title: `${capitalise(route.params.pokemonName)} Info`,
+        })}
+      />
+    </TeamsStack.Navigator>
+  );
+};
+
+const TabBarIcon = ({ name, focused }) => {
+  const { theme } = useTheme();
+
+  return (
+    <MaterialIcons
+      name={name}
+      size={24}
+      color={focused ? theme.colors.primary : theme.colors.gray[5]}
+    />
+  );
+};
+
+const TabBarLabel = ({ children, focused }) => {
+  const textColor = focused ? "primary" : "gray.5";
+
+  return (
+    <Text variant="body-sm" c={textColor}>
+      {children}
+    </Text>
+  );
+};
+const NavigationTabs = () => {
+  const { theme } = useTheme();
+
+  return (
+    <Tab.Navigator initialRouteName={"Search"}>
+      <Tab.Screen
+        name={"Search"}
+        component={SearchNavigationStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="search" focused={focused} />
+          ),
+          tabBarLabel: (props) => <TabBarLabel {...props} />,
+        }}
+      />
+      <Tab.Screen
+        name={"Team"}
+        component={TeamsNavigationStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="workspaces" focused={focused} />
+          ),
+          tabBarLabel: (props) => <TabBarLabel {...props} />,
+        }}
+      />
+      <Tab.Screen
+        name={screenNames.user}
+        component={TempHome}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name="person" focused={focused} />
+          ),
+          tabBarLabel: (props) => <TabBarLabel {...props} />,
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export const AppRouter = () => {
   return (
     <NavigationContainer initialRouteName="Home">
       <Stack.Navigator>
-        {/* To be removed */}
-        <Stack.Screen name="Home" component={TempHome} />
+        {/* Main application */}
+        <Stack.Screen
+          name="Home"
+          component={NavigationTabs}
+          options={{ headerShown: false }}
+        />
         {/* Auth */}
-        <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen
-          name="PokemonSearch"
-          component={PokemonSearchPage}
-          options={{
-            title: "Search Pokemon",
-          }}
+          name={screenNames.login}
+          component={LoginPage}
+          options={{ headerBackVisible: false }}
         />
         <Stack.Screen
-          name="PokemonInfo"
-          component={PokemonInfoPage}
-          options={({ route }) => ({
-            title: `${capitalise(route.params.pokemonName)} Info`,
-          })}
+          name={screenNames.register}
+          component={RegisterPage}
+          options={{ headerBackVisible: false }}
         />
-        <Stack.Screen name="Teams" component={TeamListPage} />
-        <Stack.Screen
-          name="TeamInfo"
-          component={TeamInfoPage}
-          options={{
-            title: "Team Info",
-          }}
-        />
-        <Stack.Screen name="User" component={TempHome} />
       </Stack.Navigator>
     </NavigationContainer>
   );

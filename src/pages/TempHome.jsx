@@ -10,7 +10,6 @@ import {
   PokemonInfoCard,
   TypeBadge,
 } from "../components/shared/info";
-import { POKE_TYPE_LIST } from "../constants";
 
 const testPokemons = [
   {
@@ -50,14 +49,14 @@ const TestComponent = () => {
       </Button>
       <Button
         onPress={() => {
-          navigate("PokemonSearch");
+          navigate("Search");
         }}
       >
         Navigate to pokeSearch
       </Button>
       <Button
         onPress={() => {
-          navigate("Teams");
+          navigate("Team");
         }}
       >
         Navigate to teamlist

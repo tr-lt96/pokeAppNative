@@ -6,6 +6,7 @@ import { getPokemonDisplayName } from "../../../functions/utils";
 import { Link } from "@react-navigation/native";
 import { useWindowDimensions } from "react-native";
 import { useMemo } from "react";
+import { screenNames } from "../../../constants";
 
 /**
  * @typedef {{
@@ -31,7 +32,7 @@ export const PokemonInfoCard = ({
 
   return (
     <Container w={calculatedWidth}>
-      <Link screen={"PokemonInfo"} params={{ pokemonName: name }}>
+      <Link screen={screenNames.pokemonInfo} params={{ pokemonName: name }}>
         <Card flex={1} radius={"md"} w={"100%"} h={"100%"}>
           <Flex direction={"row-reverse"} w={"100%"}>
             <PokeIdBadge pokeId={pokeId} />

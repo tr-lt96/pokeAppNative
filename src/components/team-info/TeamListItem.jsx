@@ -12,6 +12,7 @@ import { deleteTeam } from "../../functions/team";
 import { useUser } from "../auth/context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useWindowDimensions } from "react-native";
+import { screenNames } from "../../constants";
 
 export const TeamListItem = ({ team = {} }) => {
   const { theme } = useTheme();
@@ -27,7 +28,7 @@ export const TeamListItem = ({ team = {} }) => {
       return;
     }
 
-    navigate("TeamInfo", {
+    navigate(screenNames.teamInfo, {
       teamId,
     });
   };
