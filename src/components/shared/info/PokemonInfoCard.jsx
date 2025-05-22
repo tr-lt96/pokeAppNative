@@ -39,9 +39,9 @@ export const PokemonInfoCard = ({
           <Flex w={"100%"} justify={"center"} py={theme.spacing(2)}>
             <Image
               uriSrc={spriteUrl}
-              miw={80}
+              w={100}
+              h={80}
               maw={200}
-              mih={80}
               mah={200}
               alt={`${name}-sprite`}
             />

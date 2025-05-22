@@ -30,7 +30,7 @@ export const PokemonInfo = ({ pokemonData = {}, loading, handleAddToTeam }) => {
           {/* Display Pokemon name and pokemon ID i.e. #025 */}
 
           {/* <Skeleton visible={loading} w={"fit-content"}> */}
-          <Button radius={"md"} onClick={handleAddToTeam}>
+          <Button radius={"md"} onPress={handleAddToTeam}>
             {"Add to your gang(s)"}
           </Button>
           {/* </Skeleton> */}

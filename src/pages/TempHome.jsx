@@ -55,13 +55,13 @@ const TestComponent = () => {
       >
         Navigate to pokeSearch
       </Button>
-      <Chip color="red.5" radius="sm">
-        fighting
-      </Chip>
-      <Flex wrap>
-        <PokemonInfoCard {...testPokemons[0]}></PokemonInfoCard>
-        <PokemonInfoCard {...testPokemons[1]}></PokemonInfoCard>
-      </Flex>
+      <Button
+        onPress={() => {
+          navigate("Teams");
+        }}
+      >
+        Navigate to teamlist
+      </Button>
     </>
   );
 };

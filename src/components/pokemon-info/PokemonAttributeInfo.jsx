@@ -129,9 +129,9 @@ export const PokemonStatsInfoCard = ({ stats }) => {
 export const PokemonSpriteDisplay = ({ spriteUrl }) => {
   const { theme } = useTheme();
   return (
-    <Card radius={"md"} w={"100%"} p={theme.spacing(2)}>
+    <Card radius={"md"} w={"100%"}>
       <Flex justify={"center"} w={"100%"} align={"center"}>
-        {spriteUrl ? <Image uriSrc={spriteUrl} h={200} /> : null}
+        {spriteUrl ? <Image uriSrc={spriteUrl} h={200} w={200} /> : null}
       </Flex>
     </Card>
   );

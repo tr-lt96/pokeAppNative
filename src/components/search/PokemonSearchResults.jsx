@@ -85,7 +85,6 @@ export const PokemonSearchResults = () => {
         wrap={"wrap"}
         mb={theme.spacing(2)}
         w={"100%"}
-        justify="center"
       >
         {resultItems?.length > 0
           ? resultItems.map((item, index) => {
@@ -101,7 +100,7 @@ export const PokemonSearchResults = () => {
           radius={"md"}
           mr={theme.spacing(1)}
           visibleFrom={"md"}
-          onClick={handleFetchBatchPokemon}
+          onPress={handleFetchBatchPokemon}
         >
           See some more ?
         </Button>

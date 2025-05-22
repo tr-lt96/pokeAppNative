@@ -6,6 +6,8 @@ import { RegisterPage } from "./src/pages/auth/RegisterPage";
 import { capitalise } from "./src/functions/utils";
 import { PokemonSearchPage } from "./src/pages/search/PokemonSearchPage";
 import { PokemonInfoPage } from "./src/pages/pokemon-info/PokemonInfoPage";
+import { TeamListPage } from "./src/pages/team-info/TeamListPage";
+import { TeamInfoPage } from "./src/pages/team-info/TeamInfoPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,10 +34,10 @@ export const AppRouter = () => {
             title: `${capitalise(route.params.pokemonName)} Info`,
           })}
         />
-        <Stack.Screen name="Teams" component={TempHome} />
+        <Stack.Screen name="Teams" component={TeamListPage} />
         <Stack.Screen
           name="TeamInfo"
-          component={TempHome}
+          component={TeamInfoPage}
           options={{
             title: "Team Info",
           }}

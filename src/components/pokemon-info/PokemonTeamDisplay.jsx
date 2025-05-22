@@ -16,7 +16,7 @@
 //           variant="light"
 //           w={50}
 //           h={50}
-//           onClick={handleAddPokemon}
+//           onPress={handleAddPokemon}
 //         >
 //           <IconPlus stroke={2} size={16} />
 //         </ActionIcon>
@@ -80,7 +80,7 @@
 //         <Button
 //           size="xs"
 //           leftSection={<IconEye size={16} />}
-//           onClick={handleView}
+//           onPress={handleView}
 //           variant="light"
 //           color={themeColor.primary}
 //         >
