@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LoginPage } from "./src/pages/auth/LoginPage";
 import { RegisterPage } from "./src/pages/auth/RegisterPage";
@@ -12,6 +12,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, useTheme } from "./src/components/shared/core";
 import { UserPage } from "./src/pages/user/UserPage";
+import { useUser } from "./src/components/auth/context/AuthContext";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -83,8 +85,6 @@ const TabBarLabel = ({ children, focused }) => {
   );
 };
 const NavigationTabs = () => {
-  const { theme } = useTheme();
-
   return (
     <Tab.Navigator initialRouteName={"Search"}>
       <Tab.Screen
@@ -124,26 +124,33 @@ const NavigationTabs = () => {
 };
 
 export const AppRouter = () => {
+  const { isAuth } = useUser();
+
   return (
-    <NavigationContainer initialRouteName="Home">
-      <Stack.Navigator>
-        {/* Main application */}
-        <Stack.Screen
-          name="Home"
-          component={NavigationTabs}
-          options={{ headerShown: false }}
-        />
-        {/* Auth */}
-        <Stack.Screen
-          name={screenNames.login}
-          component={LoginPage}
-          options={{ headerBackVisible: false }}
-        />
-        <Stack.Screen
-          name={screenNames.register}
-          component={RegisterPage}
-          options={{ headerBackVisible: false }}
-        />
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
+        {isAuth ? (
+          // Home application
+          <Stack.Screen
+            name={screenNames.home}
+            component={NavigationTabs}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
+            {/* Auth */}
+            <Stack.Screen
+              name={screenNames.login}
+              component={LoginPage}
+              options={{ headerBackVisible: false }}
+            />
+            <Stack.Screen
+              name={screenNames.register}
+              component={RegisterPage}
+              options={{ headerBackVisible: false }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

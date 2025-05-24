@@ -1,9 +1,11 @@
 // import { Image } from "@mantine/core";
+import { Link, usePreventRemove } from "@react-navigation/native";
 import { LoginForm } from "../../components/auth/login/LoginForm";
 // import { Link } from "react-router";
 // import logo from "../../assets/logo.jpg";
 import { Text, Flex } from "../../components/shared/core";
 import { AuthLayout } from "./AuthLayout";
+import { screenNames } from "../../constants";
 
 const FormHeader = () => {
   return (
@@ -15,38 +17,25 @@ const FormHeader = () => {
   );
 };
 
-// const RegisterLink = () => {
-//   return (
-//     <span className={styleClasses["auth-link"]}>
-//       <Text size="sm">New trainer?</Text>
-//       <Link to="/register" style={{ textDecoration: "none" }}>
-//         <Text size="sm" c={themeColor.primary} fw={700}>
-//           Register here.
-//         </Text>
-//       </Link>
-//     </span>
-//   );
-// };
+const RegisterLink = () => {
+  return (
+    <Flex gap={4} justify={"center"}>
+      <Text variant="body-md">New trainer?</Text>
+      <Link screen={screenNames.register}>
+        <Text variant={"body-md-strong"} c={"primary"}>
+          Register here.
+        </Text>
+      </Link>
+    </Flex>
+  );
+};
 
 export const LoginPage = () => {
   return (
     <AuthLayout>
       <FormHeader />
       <LoginForm />
-      {/* <RegisterLink /> */}
+      <RegisterLink />
     </AuthLayout>
   );
 };
-
-// .form-header {
-//     display: flex;
-//     flex-direction: column;
-//     text-align: center;
-//     align-items: center;
-// }
-
-// .auth-link {
-//     display: flex;
-//     gap: 4px;
-//     justify-content: center;
-// }

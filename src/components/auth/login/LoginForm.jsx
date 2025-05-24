@@ -4,106 +4,129 @@ import {
   PasswordInput,
   Button,
   useTheme,
+  useMessage,
 } from "../../shared/core";
-// import { useForm } from "@mantine/form";
-// import { useMessage } from "../../shared/core";
 import { TOKEN_KEY } from "../../../constants";
 import { loginUser } from "../../../functions/auth";
 import { useUser } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View } from "react-native";
-
-// import { useNavigate } from "react-router";
+import { useForm, Controller } from "react-hook-form";
 
 export const LoginForm = () => {
   const { theme } = useTheme();
-  // const { setUserAlert } = useMessage();
-  // const { resetUserContext } = useUser();
-  // const navigate = useNavigate();
+  const { setUserAlert } = useMessage();
+  const { setupUserContext } = useUser();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  // const loginForm = useForm({
-  //   mode: "uncontrolled",
-  //   initialValues: {
-  //     username: "",
-  //     password: "",
-  //   },
+  const handleLoginFormSubmit = async (values) => {
+    if (!values) {
+      return;
+    }
 
-  //   validate: {
-  //     username: (value) => {
-  //       if (value.includes("@")) {
-  //         return /^[\w-\.]+@([\w-]+\.)+[\w-]+$/.test(value)
-  //           ? null
-  //           : "Invalid email";
-  //       } else {
-  //         return /^[a-zA-Z0-9_.-]*$/.test(value) ? null : "Invalid username";
-  //       }
-  //     },
-  //   },
-  // });
+    const result = await loginUser({
+      username: values.username,
+      password: values.password,
+    });
 
-  // const handleSubmit = (values) => {
-  //   if (!values) {
-  //     return;
-  //   }
+    if (!result) {
+      setUserAlert(
+        "Awrr, can't log you in with these credentials. Have you registered with us?",
+        "error"
+      );
+    } else {
+      const { token } = result;
+      if (token) {
+        AsyncStorage.setItem(TOKEN_KEY, token);
+        setUserAlert(`Welcome, trainer ${values.username} 👋`, "success");
 
-  //   loginUser({ username: values.username, password: values.password }).then(
-  //     (result) => {
-  //       if (!result) {
-  //         setUserAlert(
-  //           "Awrr, can't log you in with these credentials. Have you registered with us?",
-  //           "error"
-  //         );
-  //       } else {
-  //         const { token } = result;
-  //         if (token) {
-  //           AsyncStorage.setItem(TOKEN_KEY, token);
-  //           setUserAlert(`Welcome, trainer ${values.username} 👋`, "success");
-  //           resetUserContext().then((isAuth) => {
-  //             if (isAuth) {
-  //               navigate("/pokemon/search");
-  //             } else {
-  //               setUserAlert("Whoopsie, can you refresh the page?", "error");
-  //             }
-  //           });
-  //         } else {
-  //           setUserAlert(
-  //             "We gave you a broken token, can you try logging in again?",
-  //             "error"
-  //           );
-  //           console.error("Auth token is broken");
-  //         }
-  //       }
-  //     }
-  //   );
-  // };
+        const isAuth = await setupUserContext();
+
+        if (!isAuth) {
+          setUserAlert("Whoopsie, can you refresh the page?", "error");
+        }
+      } else {
+        setUserAlert(
+          "We gave you a broken token, can you try logging in again?",
+          "error"
+        );
+        console.error("Auth token is broken");
+      }
+    }
+  };
 
   return (
-    // <form onSubmit={loginForm.onSubmit(handleSubmit)}>
-    <View>
-      <Flex direction={"column"} gap={theme.spacing(3)}>
-        <TextInput
-          required
-          radius={"md"}
-          variant={"filled"}
-          label={"Trainer's name"}
-          description={"Enter your username or email"}
-          placeholder="Username or email"
-          // {...loginForm.getInputProps("username")}
-        />
-        <PasswordInput
-          required
-          radius={"md"}
-          variant={"filled"}
-          label={"Password"}
-          description={"Enter password"}
-          placeholder="********"
-          // {...loginForm.getInputProps("password")}
-        />
+    <Flex direction={"column"} gap={theme.spacing(3)}>
+      <Controller
+        control={control}
+        render={({ field: { onBlur, onChange, value } }) => (
+          <TextInput
+            radius={"md"}
+            label={"Trainer's name"}
+            description={"Enter your username or email"}
+            placeholder="Username or email"
+            value={value}
+            onChangeText={(value) => onChange(value)}
+            onBlur={onBlur}
+            errorMessage={errors?.username?.message}
+          />
+        )}
+        name="username"
+        rules={{
+          required: true,
+          validate: {
+            pattern: (value) => {
+              if (value.includes("@")) {
+                return /^[\w-\.]+@([\w-]+\.)+[\w-]+$/.test(value)
+                  ? null
+                  : "Invalid email";
+              } else {
+                return /^[a-zA-Z0-9_.-]*$/.test(value)
+                  ? null
+                  : "Invalid username";
+              }
+            },
+          },
+        }}
+      />
 
-        <Button type="submit" fullWidth radius={"md"} my={theme.spacing(4)}>
-          Log in
-        </Button>
-      </Flex>
-    </View>
+      <Controller
+        control={control}
+        render={({ field: { onBlur, onChange, value } }) => (
+          <PasswordInput
+            radius={"md"}
+            variant={"filled"}
+            label={"Password"}
+            description={"Enter password"}
+            placeholder="********"
+            value={value}
+            onChangeText={(value) => onChange(value)}
+            onBlur={onBlur}
+            errorMessage={errors?.password?.message}
+          />
+        )}
+        name="password"
+        rules={{
+          required: true,
+        }}
+      />
+
+      <Button
+        fullWidth
+        radius={"md"}
+        my={theme.spacing(4)}
+        onPress={handleSubmit(handleLoginFormSubmit)}
+      >
+        Log in
+      </Button>
+    </Flex>
   );
 };

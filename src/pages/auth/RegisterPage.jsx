@@ -4,6 +4,8 @@ import { RegisterForm } from "../../components/auth/register/RegisterForm";
 // import logo from "../../assets/logo.jpg";
 import { Text, Flex } from "../../components/shared/core";
 import { AuthLayout } from "./AuthLayout";
+import { screenNames } from "../../constants";
+import { Link, usePreventRemove } from "@react-navigation/native";
 
 const FormHeader = () => {
   return (
@@ -15,25 +17,25 @@ const FormHeader = () => {
   );
 };
 
-// const LoginLink = () => {
-//   return (
-//     <span className={styleClasses["auth-link"]}>
-//       <Text size="sm">Already one of us?</Text>
-//       <Link to="/login" style={{ textDecoration: "none" }}>
-//         <Text size="sm" c={themeColor.primary} fw={700}>
-//           Login
-//         </Text>
-//       </Link>
-//     </span>
-//   );
-// };
+const LoginLink = () => {
+  return (
+    <Flex gap={4} justify={"center"}>
+      <Text variant="body-md">Already one of us?</Text>
+      <Link screen={screenNames.login}>
+        <Text variant={"body-md-strong"} c={"primary"}>
+          Login
+        </Text>
+      </Link>
+    </Flex>
+  );
+};
 
 export const RegisterPage = () => {
   return (
     <AuthLayout>
       <FormHeader />
       <RegisterForm />
-      {/* <LoginLink /> */}
+      <LoginLink />
     </AuthLayout>
   );
 };

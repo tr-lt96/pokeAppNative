@@ -18,6 +18,7 @@ export const MessageProvider = ({ children }) => {
   const setUserAlert = (message, severity) => {
     setMessage(message);
     setSeverity(severity);
+    console.log(message);
 
     setTimeout(() => {
       setMessage("");

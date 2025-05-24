@@ -9,6 +9,10 @@ export const getAllTeams = async () => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -50,6 +54,10 @@ export const getTeamById = async (teamId, teams = []) => {
 
   try {
     const token = (await AsyncStorage.getItem(TOKEN_KEY)) || "";
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -84,6 +92,10 @@ export const addNewTeam = async (teamName) => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/create`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -121,6 +133,10 @@ export const deleteTeam = async (teamId) => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -151,6 +167,10 @@ export const addPokemonToTeam = async (pokemonName, teamId) => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}/pokemon`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
@@ -182,6 +202,10 @@ export const evaluatePokemonTeam = async (teamId) => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/teams/${teamId}/evaluation`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);

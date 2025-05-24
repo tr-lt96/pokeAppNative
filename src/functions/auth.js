@@ -86,6 +86,10 @@ export const updateUserPassword = async ({
   try {
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/change-password`;
     const token = (await AsyncStorage.getItem(TOKEN_KEY)) || "";
+    if (!token) {
+      return null;
+    }
+
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
@@ -124,6 +128,10 @@ export const logoutUser = async () => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/logout`;
     const headers = new Headers();
     headers.append("Content-Type", "application/json");

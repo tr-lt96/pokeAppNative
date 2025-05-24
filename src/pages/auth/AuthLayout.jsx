@@ -1,27 +1,8 @@
-// import { useNavigate } from "react-router";
-// import { useUser } from "../../components/auth/context/AuthContext";
-import { useEffect } from "react";
 import { Flex, useTheme, Card } from "../../components/shared/core";
 import { ScreenLayout } from "../ScreenLayout";
 
 export const AuthLayout = ({ children }) => {
   const { theme } = useTheme();
-  // const { isAuth } = useUser();
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     navigate("/pokemon/search");
-  //   }
-  // }, []);
-
-  // return (
-  //   <div className={styleClasses["layout-container"]}>
-  //     <Card shadow="md" radius={"md"} className={styleClasses["form-card"]}>
-  //       {children}
-  //     </Card>
-  //   </div>
-  // );
 
   return (
     <ScreenLayout>

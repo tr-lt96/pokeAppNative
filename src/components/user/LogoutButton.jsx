@@ -2,6 +2,7 @@ import { logoutUser } from "../../functions/auth";
 import { useMessage, Button, useTheme } from "../shared/core";
 import { useUser } from "../auth/context/AuthContext";
 import { TOKEN_KEY } from "../../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LogoutButton = () => {
   const { theme } = useTheme();
@@ -13,9 +14,9 @@ export const LogoutButton = () => {
         if (!result) {
           setUserAlert("Oops, looks like we don't want you to go", "error");
         } else {
+          AsyncStorage.removeItem(TOKEN_KEY);
           resetUserContext();
           setUserAlert("Bye bye", "success");
-          window.localStorage.removeItem(TOKEN_KEY);
         }
       })
       .catch((error) => {

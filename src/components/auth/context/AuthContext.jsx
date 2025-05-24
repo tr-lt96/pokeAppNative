@@ -11,6 +11,7 @@ const initUser = {
   addTeam: (team) => {},
   updateTeam: (team) => {},
   deleteTeam: (teamId) => {},
+  setupUserContext: () => {},
   resetUserContext: () => {},
 };
 
@@ -25,8 +26,6 @@ export const UserProvider = ({ children }) => {
   });
 
   const [loading, setLoading] = useState(true);
-  // const navigate = useNavigate();
-  // const location = useLocation();
 
   const setupUserContext = async () => {
     setLoading(true);
@@ -34,10 +33,7 @@ export const UserProvider = ({ children }) => {
     const userData = await getUser();
 
     if (!userData) {
-      setLoading(false);
-      // if (location.pathname !== "/login" && location.pathname !== "/register") {
-      //   navigate("/login");
-      // }
+      resetUserContext();
       return false;
     }
 
@@ -106,8 +102,18 @@ export const UserProvider = ({ children }) => {
     setTeams(currentTeam);
   };
 
+  const resetUserContext = () => {
+    setLoading(false);
+    setUser({
+      isAuth: false,
+      username: "",
+      email: "",
+    });
+  };
+
   useState(() => {
-    setupUserContext();
+    setLoading(false);
+    // setupUserContext();
   }, []);
 
   if (loading) {
@@ -124,7 +130,8 @@ export const UserProvider = ({ children }) => {
         addTeam,
         updateTeam,
         deleteTeam,
-        resetUserContext: setupUserContext,
+        setupUserContext,
+        resetUserContext,
       }}
     >
       {children}

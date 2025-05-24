@@ -11,6 +11,10 @@ export const getUser = async () => {
 
   try {
     const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      return null;
+    }
+
     const endpoint = `${process.env.EXPO_PUBLIC_API_ENDPOINT}/auth/userInformation`;
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);

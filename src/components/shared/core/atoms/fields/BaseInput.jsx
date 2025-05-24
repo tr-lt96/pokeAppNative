@@ -4,7 +4,12 @@ import { TextInput } from "react-native";
 import { Text } from "../Text";
 import { Flex } from "../../layouts/Flex";
 
-export const BaseInput = ({ radius = "md", style = {}, ...inputProps }) => {
+export const BaseInput = ({
+  radius = "md",
+  style = {},
+  errorMessage = "",
+  ...inputProps
+}) => {
   const { theme } = useTheme();
 
   const baseInputStyle = {
@@ -14,21 +19,30 @@ export const BaseInput = ({ radius = "md", style = {}, ...inputProps }) => {
     paddingInline: theme.spacing(3),
     minHeight: 36,
     borderRadius: theme.radius[radius],
+    borderColor: errorMessage ? theme.colors.red[6] : "none",
+    borderWidth: errorMessage ? 1 : 0,
   };
 
   const resolvedStyle = resolveStyleProps(inputProps, theme);
 
   return (
-    <Flex>
-      <TextInput
-        style={{
-          ...baseInputStyle,
-          ...resolvedStyle,
-          ...style,
-        }}
-        {...inputProps}
-      />
-    </Flex>
+    <>
+      <Flex>
+        <TextInput
+          style={{
+            ...baseInputStyle,
+            ...resolvedStyle,
+            ...style,
+          }}
+          {...inputProps}
+        />
+      </Flex>
+      {errorMessage ? (
+        <Text variant="label-sm" c={"red"} mt={2}>
+          {errorMessage}
+        </Text>
+      ) : null}
+    </>
   );
 };
 

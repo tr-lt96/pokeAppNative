@@ -12,29 +12,14 @@ import {
 } from "../shared/core";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const SearchButtonIcon = () => {
-  return <MaterialIcons name={"search"} size={16} />;
-};
-
-const TypeSearchSwitchButtonIcon = () => {
-  return <MaterialIcons name={"category"} size={16} />;
-};
-
-const ResetSearchIcon = () => {
-  return <MaterialIcons name={"close"} size={16} />;
-};
-
 export const SearchBar = () => {
   const { theme } = useTheme();
   const { setSearchQuery, setResultItems, setSearchMode, setLoading } =
     usePokemonSearchContext();
   const { setUserAlert } = useMessage();
   const {
-    register,
-    setValue,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
     setError,
   } = useForm({
@@ -42,20 +27,6 @@ export const SearchBar = () => {
       pokemonName: "",
     },
   });
-
-  // const searchForm = useForm({
-  //   initialValues: {
-  //     pokemonName: "",
-  //   },
-
-  //   validate: {
-  //     pokemonName: (value) => {
-  //       return /^[a-zA-Z0-9-]*$/.test(value)
-  //         ? null
-  //         : "Invalid pokemon name or ID";
-  //     },
-  //   },
-  // });
 
   const handleSearch = (values) => {
     setLoading(true);
@@ -102,16 +73,8 @@ export const SearchBar = () => {
     setSearchMode("type");
   };
 
-  const handleResetSearch = () => {
-    // searchForm.reset();
-    // searchForm.setValues({ pokemonName: "" });
-    setResultItems([]);
-    setSearchMode("all");
-  };
-
   return (
     <Card radius={"md"} w={"100%"}>
-      {/* <form onSubmit={searchForm.onSubmit(handleSearch)}> */}
       <Flex
         gap={theme.spacing(2)}
         w={"100%"}
@@ -162,7 +125,6 @@ export const SearchBar = () => {
           </ActionIcon>
         </Flex>
       </Flex>
-      {/* </form> */}
     </Card>
   );
 };
