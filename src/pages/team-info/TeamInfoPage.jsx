@@ -10,15 +10,13 @@ import {
 } from "../../components/shared/core";
 import { useUser } from "../../components/auth/context/AuthContext";
 import { useRoute } from "@react-navigation/native";
-import mockTeams from "../../_mock/data/teams.json";
 import { ScreenLayout } from "../ScreenLayout";
 
 export const TeamInfoPage = () => {
   const { theme } = useTheme();
   const { params } = useRoute();
   const { teamId } = params || {};
-  // const { teams } = useUser();
-  const teams = mockTeams;
+  const { teams } = useUser();
   const [team, setTeam] = useState();
   const { setUserAlert } = useMessage();
 
@@ -42,7 +40,7 @@ export const TeamInfoPage = () => {
     return null;
   }
   return (
-    <ScreenLayout>
+    <ScreenLayout withScrollView>
       <Container w={"100%"} mt={theme.spacing(3)} mb={theme.spacing(6)}>
         <Flex direction={"column"} gap={theme.spacing(3)}>
           <TeamInfo team={team} />

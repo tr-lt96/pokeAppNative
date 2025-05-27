@@ -5,17 +5,21 @@ import {
   Button,
   useTheme,
   useMessage,
+  Container,
 } from "../../shared/core";
 import { TOKEN_KEY } from "../../../constants";
 import { loginUser } from "../../../functions/auth";
 import { useUser } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm, Controller } from "react-hook-form";
+import { useState } from "react";
+import { ActivityIndicator } from "react-native";
 
 export const LoginForm = () => {
   const { theme } = useTheme();
   const { setUserAlert } = useMessage();
   const { setupUserContext } = useUser();
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -58,9 +62,10 @@ export const LoginForm = () => {
           "We gave you a broken token, can you try logging in again?",
           "error"
         );
-        console.error("Auth token is broken");
       }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -119,14 +124,20 @@ export const LoginForm = () => {
         }}
       />
 
-      <Button
-        fullWidth
-        radius={"md"}
-        my={theme.spacing(4)}
-        onPress={handleSubmit(handleLoginFormSubmit)}
-      >
-        Log in
-      </Button>
+      {loading ? (
+        <Container mt={theme.spacing(2)}>
+          <ActivityIndicator />
+        </Container>
+      ) : (
+        <Button
+          fullWidth
+          radius={"md"}
+          my={theme.spacing(4)}
+          onPress={handleSubmit(handleLoginFormSubmit)}
+        >
+          Log in
+        </Button>
+      )}
     </Flex>
   );
 };

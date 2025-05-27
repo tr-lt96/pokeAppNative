@@ -4,7 +4,7 @@ import { ScreenLayout } from "../ScreenLayout";
 
 export const UserPage = () => {
   return (
-    <ScreenLayout>
+    <ScreenLayout withScrollView>
       <Flex justify={"center"}>
         <UserInfo />
       </Flex>

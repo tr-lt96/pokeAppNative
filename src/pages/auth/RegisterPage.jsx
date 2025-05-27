@@ -1,5 +1,3 @@
-// import { Image } from "@mantine/core";
-// import { Link } from "react-router";
 import { RegisterForm } from "../../components/auth/register/RegisterForm";
 // import logo from "../../assets/logo.jpg";
 import { Text, Flex } from "../../components/shared/core";

@@ -12,5 +12,8 @@ export * from "./atoms/Chip";
 export * from "./atoms/Progress";
 export * from "./atoms/Rating";
 export * from "./atoms/Divider";
+export * from "./atoms/Modal";
+export * from "./atoms/Snackbar";
+export * from "./atoms/Drawer";
 export * from "./layouts/Flex";
 export * from "./layouts/Container";

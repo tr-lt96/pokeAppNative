@@ -7,6 +7,7 @@ import {
 import { SearchTypeBar } from "../../components/search/SearchTypeBar";
 import { PokemonSearchResults } from "../../components/search/PokemonSearchResults";
 import { ScreenLayout } from "../ScreenLayout";
+import { ScrollView } from "react-native";
 
 const SearchBars = () => {
   const { searchMode } = usePokemonSearchContext();
@@ -21,21 +22,22 @@ const SearchBars = () => {
 export const PokemonSearchPage = () => {
   const { theme } = useTheme();
   return (
-    <PokemonSearchProvider>
-      <Container w={"100%"} p={theme.spacing(2)}>
-        <SearchBars />
-      </Container>
-      <Flex
-        my={theme.spacing(2)}
-        direction={"column"}
-        gap={theme.spacing(4)}
-        w={"100%"}
-        flex={1}
-      >
-        <ScreenLayout>
+    <ScreenLayout>
+      <PokemonSearchProvider>
+        <Container w={"100%"} px={theme.spacing(4)} py={theme.spacing(2)}>
+          <SearchBars />
+        </Container>
+        <Flex
+          my={theme.spacing(2)}
+          direction={"column"}
+          gap={theme.spacing(4)}
+          w={"100%"}
+          align={"center"}
+          flex={1}
+        >
           <PokemonSearchResults />
-        </ScreenLayout>
-      </Flex>
-    </PokemonSearchProvider>
+        </Flex>
+      </PokemonSearchProvider>
+    </ScreenLayout>
   );
 };

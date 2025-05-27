@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "poketeam",
+    "slug": "poketeam",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,8 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "poketeam",
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.ifn666.poketeam"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,9 +22,6 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }

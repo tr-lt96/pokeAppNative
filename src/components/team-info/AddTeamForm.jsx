@@ -1,68 +1,76 @@
-// import { useForm } from "@mantine/form";
-import { themeColor } from "../../constants";
 import { addNewTeam } from "../../functions/team";
 import { useUser } from "../auth/context/AuthContext";
-import { useMessage, Button, Flex, TextInput } from "../shared/core";
+import { useMessage, Button, Flex, TextInput, useTheme } from "../shared/core";
+import { useForm, Controller } from "react-hook-form";
 
 export const AddTeamForm = ({ handleCloseModal }) => {
   const { addTeam: addTeamToContext } = useUser();
   const { setUserAlert } = useMessage();
-  // const newTeamForm = useForm({
-  //   mode: "uncontrolled",
-  //   initialValues: {
-  //     teamName: "",
-  //   },
+  const { theme } = useTheme();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      teamName: "",
+    },
+  });
 
-  //   validate: {
-  //     teamName: (value) =>
-  //       /^[a-zA-Z0-9_.-]*$/.test(value)
-  //         ? null
-  //         : "Invalid teamname, must have only non-spacing character and _,.,-",
-  //   },
-  // });
-
-  // const handleSubmit = (values) => {
-  //   addNewTeam(values.teamName)
-  //     .then((result) => {
-  //       if (result) {
-  //         addTeamToContext({
-  //           name: result.name,
-  //           teamId: result.teamId,
-  //           pokemons: [],
-  //         });
-  //         handleCloseModal();
-  //       } else {
-  //         setUserAlert("Oopsies, error while creating new team", "error");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setUserAlert("Oopsies, error while creating new team", "error");
-  //     });
-  // };
+  const handleAddTeamForm = (values) => {
+    addNewTeam(values.teamName)
+      .then((result) => {
+        if (result) {
+          addTeamToContext({
+            name: result.name,
+            teamId: result.teamId,
+            pokemons: [],
+          });
+          handleCloseModal();
+        } else {
+          setUserAlert("Oopsies, error while creating new team", "error");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setUserAlert("Oopsies, error while creating new team", "error");
+      });
+  };
 
   return (
-    // <form onSubmit={newTeamForm.onSubmit(handleSubmit)}>
-    <Flex direction={"column"} gap={"sm"}>
-      <TextInput
-        required
-        radius={"md"}
-        variant={"filled"}
-        label={"Team's name"}
-        description={"Warning: can't change team name once set. How sad!"}
-        placeholder="Team Rocket"
-        // {...newTeamForm.getInputProps("teamName")}
+    <Flex direction={"column"} gap={theme.spacing(2)} px={theme.spacing(2)}>
+      <Controller
+        control={control}
+        render={({ field: { onBlur, onChange, value } }) => (
+          <TextInput
+            radius={"md"}
+            label={"Team's name"}
+            description={"Warning: can't change team name once set. How sad!"}
+            placeholder="Team Rocket"
+            value={value}
+            onChangeText={(value) => onChange(value)}
+            onBlur={onBlur}
+            errorMessage={errors?.teamName?.message}
+          />
+        )}
+        name="teamName"
+        rules={{
+          required: true,
+          pattern: {
+            value: /^[a-zA-Z0-9_.-]*$/,
+            message:
+              "Invalid teamname, must have only non-spacing character and _,.,-",
+          },
+        }}
       />
       <Button
-        color={themeColor.primary}
-        type="submit"
         fullWidth
         radius={"md"}
-        my={"md"}
+        my={theme.spacing(3)}
+        onPress={handleSubmit(handleAddTeamForm)}
       >
         Create team
       </Button>
     </Flex>
-    // </form>
   );
 };

@@ -1,4 +1,3 @@
-// import { useForm } from "@mantine/form";
 import { updateUserPassword } from "../../../functions/auth";
 import {
   useTheme,
@@ -53,7 +52,6 @@ export const ResetPasswordForm = () => {
   };
 
   return (
-    // <form onSubmit={registerForm.onSubmit(handleSubmit)}>
     <Flex direction={"column"} gap={theme.spacing(3)}>
       <Controller
         control={control}
@@ -80,7 +78,6 @@ export const ResetPasswordForm = () => {
         render={({ field: { onBlur, onChange, value } }) => (
           <PasswordInput
             radius={"md"}
-            variant={"filled"}
             label={"Password"}
             description={
               "Must have at least a capital character, a number and a special character (e.g. @, #)"
@@ -119,7 +116,6 @@ export const ResetPasswordForm = () => {
         render={({ field: { onBlur, onChange, value } }) => (
           <PasswordInput
             radius={"md"}
-            variant={"filled"}
             label={"Confirm your password"}
             description={"Re-enter your password"}
             placeholder="********"
@@ -145,6 +141,5 @@ export const ResetPasswordForm = () => {
         </Button>
       </Flex>
     </Flex>
-    // </form>
   );
 };

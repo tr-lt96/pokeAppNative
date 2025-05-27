@@ -9,15 +9,13 @@ import { TeamListItem } from "../../components/team-info/TeamListItem";
 import { useUser } from "../../components/auth/context/AuthContext";
 import { AddTeamAction } from "../../components/team-info/AddTeamAction";
 import { ScreenLayout } from "../ScreenLayout";
-import mockTeams from "../../_mock/data/teams.json";
 
 export const TeamListPage = () => {
   const { theme } = useTheme();
-  // const { teams = [] } = useUser();
-  const teams = mockTeams;
+  const { teams = [] } = useUser();
 
   return (
-    <ScreenLayout>
+    <ScreenLayout withScrollView>
       <Container w={"100%"} mt={theme.spacing(3)} p={0}>
         <Text variant={"heading-xl-strong"}>Teams</Text>
         <Text mb={theme.spacing(3)}>Every single team, all yours trully! </Text>

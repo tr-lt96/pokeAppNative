@@ -1,4 +1,3 @@
-// import { useForm } from "@mantine/form";
 import { useForm, Controller } from "react-hook-form";
 import { searchPokemonByNameId } from "../../functions/pokemon";
 import { usePokemonSearchContext } from "./context/PokemonSearchContext";
@@ -109,7 +108,6 @@ export const SearchBar = () => {
         <Flex align={"center"} gap={theme.spacing(2)}>
           <ActionIcon
             radius={"md"}
-            type="submit"
             size={48}
             onPress={handleSubmit(handleSearch)}
           >

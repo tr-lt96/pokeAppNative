@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { getUser } from "../../../functions/user";
 import { getAllTeams } from "../../../functions/team";
-// import { useLocation, useNavigate } from "react-router";
 
 const initUser = {
   username: "",
@@ -112,8 +111,8 @@ export const UserProvider = ({ children }) => {
   };
 
   useState(() => {
-    setLoading(false);
-    // setupUserContext();
+    // setLoading(false);
+    setupUserContext();
   }, []);
 
   if (loading) {

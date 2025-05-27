@@ -1,7 +1,5 @@
-// import { Image } from "@mantine/core";
 import { Link, usePreventRemove } from "@react-navigation/native";
 import { LoginForm } from "../../components/auth/login/LoginForm";
-// import { Link } from "react-router";
 // import logo from "../../assets/logo.jpg";
 import { Text, Flex } from "../../components/shared/core";
 import { AuthLayout } from "./AuthLayout";

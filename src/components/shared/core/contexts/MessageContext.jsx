@@ -18,12 +18,11 @@ export const MessageProvider = ({ children }) => {
   const setUserAlert = (message, severity) => {
     setMessage(message);
     setSeverity(severity);
-    console.log(message);
 
     setTimeout(() => {
       setMessage("");
       setSeverity("");
-    }, 5000);
+    }, 3000);
   };
   return (
     <MessageContext.Provider value={{ message, severity, setUserAlert }}>

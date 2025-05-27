@@ -34,5 +34,17 @@
         "spriteUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png"
       }
     ]
+  },
+  {
+    "name": "Team Hyuga",
+    "teamId": "3",
+    "pokemons": [
+      {
+        "name": "poliwag",
+        "pokeId": 60,
+        "types": ["water"],
+        "spriteUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png"
+      }
+    ]
   }
 ]

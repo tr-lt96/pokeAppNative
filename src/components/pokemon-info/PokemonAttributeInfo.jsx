@@ -50,7 +50,12 @@ export const PokemonAbilitesInfoCard = ({ abilities }) => {
       </Text>
       <Flex gap={6} wrap={"wrap"}>
         {abilities.map((ability, index) => (
-          <Badge key={`pokemon-${index}-${ability}`} size="sm" radius={"sm"}>
+          <Badge
+            key={`pokemon-${index}-${ability}`}
+            size="sm"
+            radius={"sm"}
+            variant="light"
+          >
             {ability}
           </Badge>
         ))}

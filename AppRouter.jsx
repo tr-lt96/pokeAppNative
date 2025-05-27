@@ -13,7 +13,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Text, useTheme } from "./src/components/shared/core";
 import { UserPage } from "./src/pages/user/UserPage";
 import { useUser } from "./src/components/auth/context/AuthContext";
-import { useEffect } from "react";
+import * as Linking from "expo-linking";
+
+const prefix = Linking.createURL("/");
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,9 +86,13 @@ const TabBarLabel = ({ children, focused }) => {
     </Text>
   );
 };
+
 const NavigationTabs = () => {
   return (
-    <Tab.Navigator initialRouteName={"Search"}>
+    <Tab.Navigator
+      initialRouteName={"Search"}
+      screenOptions={{ animation: "shift" }}
+    >
       <Tab.Screen
         name={"Search"}
         component={SearchNavigationStack}
@@ -125,9 +131,12 @@ const NavigationTabs = () => {
 
 export const AppRouter = () => {
   const { isAuth } = useUser();
+  const linking = {
+    prefixes: [prefix],
+  };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
         {isAuth ? (
           // Home application

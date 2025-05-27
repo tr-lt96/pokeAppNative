@@ -1,25 +1,21 @@
-import { Button } from "../shared/core";
-// import { AddTeamForm } from "./AddTeamForm";
-// import { useDisclosure } from "@mantine/hooks";
-// import { IconPlus } from "@tabler/icons-react";
-// import { Text } from "../shared/core";
+import { useState } from "react";
+import { Button, Modal } from "../shared/core";
+import { AddTeamForm } from "./AddTeamForm";
 
 export const AddTeamAction = () => {
-  // const [opened, { open, close }] = useDisclosure(false);
+  const [opened, setOpen] = useState(false);
+
+  const open = () => setOpen(true);
+  const close = () => setOpen(false);
 
   return (
     <>
-      <Button radius={"md"} onPress={() => {}}>
+      <Button radius={"md"} onPress={open}>
         Not enough team?
       </Button>
-      {/* <Modal
-        title={<Text variant="heading-md-strong">Create a new team</Text>}
-        opened={opened}
-        onClose={close}
-        withCloseButton
-      >
+      <Modal title={"Create a new team"} opened={opened} onClose={close}>
         <AddTeamForm handleCloseModal={() => close()} />
-      </Modal> */}
+      </Modal>
     </>
   );
 };
