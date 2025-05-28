@@ -14,8 +14,8 @@ import { ScreenLayout } from "../ScreenLayout";
 
 export const TeamInfoPage = () => {
   const { theme } = useTheme();
-  const { params } = useRoute();
-  const { teamId } = params || {};
+  const { params = {} } = useRoute();
+  const { teamId } = params;
   const { teams } = useUser();
   const [team, setTeam] = useState();
   const { setUserAlert } = useMessage();

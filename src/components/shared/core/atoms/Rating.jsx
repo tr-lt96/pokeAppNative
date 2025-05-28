@@ -8,7 +8,7 @@ export const Rating = ({
   value,
   emptySymbol,
   fullSymbol,
-  key,
+  keyID = "",
   ...ratingProps
 }) => {
   const { theme } = useTheme();
@@ -23,10 +23,12 @@ export const Rating = ({
     <Flex gap={2} {...ratingProps}>
       {fullSlots.map((_slot, index) => {
         return fullSymbol ? (
-          React.cloneElement(fullSymbol, { key: `${key}-rating-full-${index}` })
+          React.cloneElement(fullSymbol, {
+            key: `${keyID}-rating-full-${index}`,
+          })
         ) : (
           <MaterialIcons
-            key={`${key}-rating-full-${index}`}
+            key={`${keyID}-rating-full-${index}`}
             color={theme.colors.primary}
             name={"circle"}
             size={10}
@@ -36,11 +38,11 @@ export const Rating = ({
       {emptySlots.map((_slot, index) => {
         return emptySymbol ? (
           React.cloneElement(emptySymbol, {
-            key: `${key}-rating-empty-${index}`,
+            key: `${keyID}-rating-empty-${index}`,
           })
         ) : (
           <MaterialIcons
-            key={`${key}-rating-empty-${index}`}
+            key={`${keyID}-rating-empty-${index}`}
             color={theme.colors.primary}
             name={"radio-button-unchecked"}
             size={10}

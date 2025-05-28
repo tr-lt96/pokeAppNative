@@ -16,12 +16,13 @@ const TypeAnalysisInfo = ({ type, chartValue, chartType }) => {
   const ratingColor = getThemeTokenFromColor(CHART_COLOR[chartType], theme);
   const emptyColor = getThemeTokenFromColor("gray.4", theme);
   const { width } = useWindowDimensions();
-  const statWidth = width / 2 - theme.spacing(2);
+  const statWidth = width / 3 - theme.spacing(8);
 
   return (
     <Container w={statWidth}>
       <TypeBadge variant={type} size="sm" />
       <Rating
+        mt={theme.spacing(2)}
         count={6}
         emptySymbol={
           <MaterialIcons color={emptyColor} name={"circle"} size={10} />
@@ -30,20 +31,25 @@ const TypeAnalysisInfo = ({ type, chartValue, chartType }) => {
           <MaterialIcons color={ratingColor} name={"circle"} size={10} />
         }
         value={chartValue}
-        key={chartType}
+        keyID={chartType}
       />
     </Container>
   );
 };
 
 const TypeAnalysisChartInfo = ({ chart = {}, chartType }) => {
+  const { theme } = useTheme();
   const displayLabel = chartType === "weak" ? "Weak" : "Strong";
   return (
     <Container p={0}>
-      <Text c={CHART_COLOR[chartType]} variant={"heading-md-strong"}>
+      <Text
+        c={CHART_COLOR[chartType]}
+        variant={"heading-md-strong"}
+        mt={theme.spacing(4)}
+      >
         {displayLabel}
       </Text>
-      <Flex wrap={"wrap"} gap={"sm"}>
+      <Flex wrap={"wrap"} gap={theme.spacing(2)} mt={theme.spacing(2)}>
         {Object.keys(chart).map((type) => {
           return (
             <TypeAnalysisInfo

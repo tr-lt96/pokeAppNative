@@ -9,7 +9,7 @@ export const TeamInfo = ({ team }) => {
   const { navigate } = useNavigation();
 
   const handleToSearch = () => {
-    navigate(screenNames.pokemonSearch);
+    navigate(screenNames.pokemon.search._name);
   };
 
   return (

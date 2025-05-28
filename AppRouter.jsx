@@ -14,6 +14,7 @@ import { Text, useTheme } from "./src/components/shared/core";
 import { UserPage } from "./src/pages/user/UserPage";
 import { useUser } from "./src/components/auth/context/AuthContext";
 import * as Linking from "expo-linking";
+import { TeamSharePage } from "./src/pages/team-info/TeamSharePage";
 
 const prefix = Linking.createURL("/");
 
@@ -24,16 +25,16 @@ const TeamsStack = createNativeStackNavigator();
 
 const SearchNavigationStack = () => {
   return (
-    <SearchStack.Navigator initialRouteName={screenNames.pokemonSearch}>
+    <SearchStack.Navigator initialRouteName={screenNames.pokemon.search._name}>
       <SearchStack.Screen
-        name={screenNames.pokemonSearch}
+        name={screenNames.pokemon.search._name}
         component={PokemonSearchPage}
         options={{
           title: "Search Pokemon",
         }}
       />
       <SearchStack.Screen
-        name={screenNames.pokemonInfo}
+        name={screenNames.pokemon.info._name}
         component={PokemonInfoPage}
         options={({ route }) => ({
           title: `${capitalise(route.params.pokemonName)} Info`,
@@ -45,17 +46,27 @@ const SearchNavigationStack = () => {
 
 const TeamsNavigationStack = () => {
   return (
-    <TeamsStack.Navigator initialRouteName={screenNames.teamList}>
-      <TeamsStack.Screen name={screenNames.teamList} component={TeamListPage} />
+    <TeamsStack.Navigator initialRouteName={screenNames.team.list._name}>
       <TeamsStack.Screen
-        name={screenNames.teamInfo}
+        name={screenNames.team.list._name}
+        component={TeamListPage}
+      />
+      <TeamsStack.Screen
+        name={screenNames.team.info._name}
         component={TeamInfoPage}
         options={{
           title: "Team Info",
         }}
       />
       <TeamsStack.Screen
-        name={screenNames.pokemonInfo}
+        name={screenNames.team.share._name}
+        component={TeamSharePage}
+        options={{
+          title: "Sharing is caring",
+        }}
+      />
+      <TeamsStack.Screen
+        name={screenNames.pokemon.info._name}
         component={PokemonInfoPage}
         options={({ route }) => ({
           title: `${capitalise(route.params.pokemonName)} Info`,
@@ -90,11 +101,11 @@ const TabBarLabel = ({ children, focused }) => {
 const NavigationTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName={"Search"}
+      initialRouteName={screenNames.pokemon._name}
       screenOptions={{ animation: "shift" }}
     >
       <Tab.Screen
-        name={"Search"}
+        name={screenNames.pokemon._name}
         component={SearchNavigationStack}
         options={{
           headerShown: false,
@@ -105,7 +116,7 @@ const NavigationTabs = () => {
         }}
       />
       <Tab.Screen
-        name={"Team"}
+        name={screenNames.team._name}
         component={TeamsNavigationStack}
         options={{
           headerShown: false,
@@ -116,7 +127,7 @@ const NavigationTabs = () => {
         }}
       />
       <Tab.Screen
-        name={screenNames.user}
+        name={screenNames.user._name}
         component={UserPage}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -131,8 +142,9 @@ const NavigationTabs = () => {
 
 export const AppRouter = () => {
   const { isAuth } = useUser();
+  const deepLinkEndpoint = process.env.EXPO_PUBLIC_UNIVERSAL || "";
   const linking = {
-    prefixes: [prefix],
+    prefixes: [prefix, deepLinkEndpoint].filter((prefix) => !!prefix),
   };
 
   return (
@@ -141,7 +153,7 @@ export const AppRouter = () => {
         {isAuth ? (
           // Home application
           <Stack.Screen
-            name={screenNames.home}
+            name={screenNames.home._name}
             component={NavigationTabs}
             options={{ headerShown: false }}
           />
@@ -149,12 +161,12 @@ export const AppRouter = () => {
           <>
             {/* Auth */}
             <Stack.Screen
-              name={screenNames.login}
+              name={screenNames.login._name}
               component={LoginPage}
               options={{ headerBackVisible: false }}
             />
             <Stack.Screen
-              name={screenNames.register}
+              name={screenNames.register._name}
               component={RegisterPage}
               options={{ headerBackVisible: false }}
             />

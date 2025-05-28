@@ -74,7 +74,7 @@ export const RegisterForm = () => {
           "Awrr, can't log you in with these credentials. Something went wrong, can you try loging in again?",
           "error"
         );
-        navigate(screenNames.login);
+        navigate(screenNames.login._name);
       } else {
         const { token } = loginResult;
         if (token) {
@@ -91,7 +91,7 @@ export const RegisterForm = () => {
             "error"
           );
           console.error("Auth token is broken");
-          navigate(screenNames.login);
+          navigate(screenNames.login._name);
         }
       }
     }

@@ -32,7 +32,10 @@ export const PokemonInfoCard = ({
 
   return (
     <Container w={calculatedWidth}>
-      <Link screen={screenNames.pokemonInfo} params={{ pokemonName: name }}>
+      <Link
+        screen={screenNames.pokemon.info._name}
+        params={{ pokemonName: name }}
+      >
         <Card flex={1} radius={"md"} w={"100%"} h={"100%"}>
           <Flex direction={"row-reverse"} w={"100%"}>
             <PokeIdBadge pokeId={pokeId} />

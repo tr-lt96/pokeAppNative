@@ -27,14 +27,7 @@ export const PokemonSearchPage = () => {
         <Container w={"100%"} px={theme.spacing(4)} py={theme.spacing(2)}>
           <SearchBars />
         </Container>
-        <Flex
-          my={theme.spacing(2)}
-          direction={"column"}
-          gap={theme.spacing(4)}
-          w={"100%"}
-          align={"center"}
-          flex={1}
-        >
+        <Flex flex={1} w={"100%"} pb={theme.spacing(3)}>
           <PokemonSearchResults />
         </Flex>
       </PokemonSearchProvider>

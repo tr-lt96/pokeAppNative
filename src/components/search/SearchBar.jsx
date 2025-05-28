@@ -1,6 +1,9 @@
 import { useForm, Controller } from "react-hook-form";
 import { searchPokemonByNameId } from "../../functions/pokemon";
-import { usePokemonSearchContext } from "./context/PokemonSearchContext";
+import {
+  initSearchContextValue,
+  usePokemonSearchContext,
+} from "./context/PokemonSearchContext";
 import {
   useMessage,
   useTheme,
@@ -13,8 +16,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 export const SearchBar = () => {
   const { theme } = useTheme();
-  const { setSearchQuery, setResultItems, setSearchMode, setLoading } =
-    usePokemonSearchContext();
+  const {
+    setSearchQuery,
+    setResultItems,
+    setSearchMode,
+    setLoading,
+    setPagination,
+  } = usePokemonSearchContext();
   const { setUserAlert } = useMessage();
   const {
     handleSubmit,
@@ -69,6 +77,7 @@ export const SearchBar = () => {
 
   const handleSwitchSearchType = () => {
     setResultItems([]);
+    setPagination(initSearchContextValue.pagination);
     setSearchMode("type");
   };
 

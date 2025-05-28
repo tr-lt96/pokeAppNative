@@ -28,18 +28,24 @@ export const PokemonSearchResults = () => {
   const { theme } = useTheme();
   const { setUserAlert } = useMessage();
 
-  const handleFetchBatchPokemon = async (isReset) => {
+  const handleFetchBatchPokemon = async (isReset = false) => {
     let resultData = null;
 
     if (isReset) {
       setPagination(initSearchContextValue.pagination);
     }
 
+    let currentPagination = isReset
+      ? initSearchContextValue.pagination
+      : pagination;
+
+    console.log({ currentPagination });
+
     try {
       if (searchMode === "type") {
-        resultData = await getPokemonByTypeData(searchType, pagination);
+        resultData = await getPokemonByTypeData(searchType, currentPagination);
       } else if (searchMode === "all") {
-        resultData = await getAllPokemonData(pagination);
+        resultData = await getAllPokemonData(currentPagination);
       } else {
         setLoading(false);
         return;
@@ -60,9 +66,9 @@ export const PokemonSearchResults = () => {
       setResultItems([...resultItems, ...results]);
 
       setPagination({
-        ...pagination,
+        ...currentPagination,
         total,
-        offset: pagination.offset + results.length,
+        offset: currentPagination.offset + results.length,
       });
     } catch (error) {
       console.error(error);
@@ -76,15 +82,17 @@ export const PokemonSearchResults = () => {
 
   useEffect(() => {
     handleFetchBatchPokemon(true);
-  }, [searchMode]);
+  }, [searchMode, searchType]);
 
   return (
-    <ScrollView flex={1}>
+    <ScrollView style={{ width: "100%", flex: 1 }}>
       <Flex
         gap={theme.spacing(2)}
         wrap={"wrap"}
         mb={theme.spacing(2)}
+        px={theme.spacing(3)}
         w={"100%"}
+        justify={"center"}
       >
         {resultItems?.length > 0
           ? resultItems.map((item, index) => {
@@ -98,9 +106,9 @@ export const PokemonSearchResults = () => {
         // <Skeleton visible={loading}>
         <Button
           radius={"md"}
-          mr={theme.spacing(1)}
+          mx={theme.spacing(3)}
           visibleFrom={"md"}
-          onPress={handleFetchBatchPokemon}
+          onPress={() => handleFetchBatchPokemon()}
         >
           See some more ?
         </Button>

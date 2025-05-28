@@ -19,7 +19,7 @@ const LoginLink = () => {
   return (
     <Flex gap={4} justify={"center"}>
       <Text variant="body-md">Already one of us?</Text>
-      <Link screen={screenNames.login}>
+      <Link screen={screenNames.login._name}>
         <Text variant={"body-md-strong"} c={"primary"}>
           Login
         </Text>

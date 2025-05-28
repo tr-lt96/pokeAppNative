@@ -19,7 +19,7 @@ const PokemonSearchContext = createContext({
   setSearchQuery: (query) => {},
   setSearchType: (filter) => {},
   setResultItems: (items) => {},
-  setPagination: (limit, offset) => {},
+  setPagination: ({ limit, offset }) => {},
   setSearchMode: (mode) => {},
   setLoading: (loading) => {},
 });

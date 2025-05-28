@@ -3,7 +3,7 @@ import { useUser } from "../auth/context/AuthContext";
 import { useMessage, Button, Flex, TextInput, useTheme } from "../shared/core";
 import { useForm, Controller } from "react-hook-form";
 
-export const AddTeamForm = ({ handleCloseModal }) => {
+export const AddTeamForm = ({ addTeamCallback, handleCloseModal }) => {
   const { addTeam: addTeamToContext } = useUser();
   const { setUserAlert } = useMessage();
   const { theme } = useTheme();
@@ -17,24 +17,24 @@ export const AddTeamForm = ({ handleCloseModal }) => {
     },
   });
 
-  const handleAddTeamForm = (values) => {
-    addNewTeam(values.teamName)
-      .then((result) => {
-        if (result) {
-          addTeamToContext({
-            name: result.name,
-            teamId: result.teamId,
-            pokemons: [],
-          });
-          handleCloseModal();
-        } else {
-          setUserAlert("Oopsies, error while creating new team", "error");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+  const handleAddTeamForm = async (values) => {
+    try {
+      const addTeamResult = await addNewTeam(values.teamName);
+
+      if (addTeamResult && !addTeamResult.error) {
+        addTeamToContext({
+          name: addTeamResult.name,
+          teamId: addTeamResult.teamId,
+          pokemons: [],
+        });
+        addTeamCallback?.(addTeamResult.teamId);
+      } else {
         setUserAlert("Oopsies, error while creating new team", "error");
-      });
+      }
+    } catch (error) {
+      console.error(error);
+      setUserAlert("Oopsies, error while creating new team", "error");
+    }
   };
 
   return (

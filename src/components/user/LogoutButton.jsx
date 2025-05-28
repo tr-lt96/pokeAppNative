@@ -1,8 +1,9 @@
 import { logoutUser } from "../../functions/auth";
-import { useMessage, Button, useTheme } from "../shared/core";
+import { useMessage, Button, useTheme, Text } from "../shared/core";
 import { useUser } from "../auth/context/AuthContext";
 import { TOKEN_KEY } from "../../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Pressable } from "react-native";
 
 export const LogoutButton = () => {
   const { theme } = useTheme();

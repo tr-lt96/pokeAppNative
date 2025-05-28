@@ -28,7 +28,7 @@ export const TeamListItem = ({ team = {} }) => {
       return;
     }
 
-    navigate(screenNames.teamInfo, {
+    navigate(screenNames.team.info._name, {
       teamId,
     });
   };

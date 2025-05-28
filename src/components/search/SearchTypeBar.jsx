@@ -1,5 +1,8 @@
 import { POKE_TYPE_LIST, POKE_TYPE_STYLES } from "../../constants";
-import { usePokemonSearchContext } from "./context/PokemonSearchContext";
+import {
+  initSearchContextValue,
+  usePokemonSearchContext,
+} from "./context/PokemonSearchContext";
 import { ActionIcon, Flex, useMessage, Card, Chip } from "../shared/core";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -73,15 +76,16 @@ export const SearchTypeBar = () => {
   };
 
   const handleChipChange = (pokeType) => {
+    setResultItems([]);
+    setPagination(initSearchContextValue.pagination);
     setSearchType(pokeType);
     setLoading(true);
-    handleGetPokemonByType(pokeType);
+    // handleGetPokemonByType(pokeType);
   };
 
-  const handleSearchSwitch = (pokeType) => {
+  const handleSearchSwitch = () => {
     setResultItems([]);
     setSearchMode("all");
-    handleGetPokemonByType(pokeType);
   };
 
   return (

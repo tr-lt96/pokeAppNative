@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 import {
   getColorWithOpacity,
   getThemeTokenFromColor,
@@ -45,7 +45,7 @@ function getButtonStyle({
   style,
   ...restProps
 }) {
-  const baseStyles = resolveStyleProps(restProps, theme);
+  const baseStyles = resolveStyleProps(restProps, theme) || {};
 
   const backgroundColor = getThemeTokenFromColor(color, theme);
   const variantBackgroundColor =
@@ -53,12 +53,14 @@ function getButtonStyle({
       ? getColorWithOpacity(backgroundColor, 0.2)
       : getThemeTokenFromColor(color, theme);
 
+  const fixedWidth = fullWidth ? "100%" : baseStyles?.width || "auto";
+
   return {
     padding: 12,
     backgroundColor: variantBackgroundColor,
     ...baseStyles,
     borderRadius: theme.radius[radius],
-    width: fullWidth ? "100%" : baseStyles.width || "fit-content",
+    width: fixedWidth,
     ...style,
   };
 }
@@ -79,7 +81,7 @@ export const Button = (buttonProps) => {
     children,
     color = "primary",
     radius = "md",
-    fullWidth,
+    fullWidth = false,
     variant = "filled",
     ...restProps
   } = buttonProps;
@@ -107,14 +109,8 @@ export const Button = (buttonProps) => {
     );
 
   return (
-    <Pressable
-      style={({ pressed }) => ({
-        ...buttonStyle,
-        ...(pressed ? buttonPressStyle : {}),
-      })}
-      {...restProps}
-    >
+    <TouchableOpacity style={buttonStyle} {...restProps}>
       {ButtonContent}
-    </Pressable>
+    </TouchableOpacity>
   );
 };

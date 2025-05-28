@@ -19,7 +19,7 @@ const RegisterLink = () => {
   return (
     <Flex gap={4} justify={"center"}>
       <Text variant="body-md">New trainer?</Text>
-      <Link screen={screenNames.register}>
+      <Link screen={screenNames.register._name}>
         <Text variant={"body-md-strong"} c={"primary"}>
           Register here.
         </Text>
