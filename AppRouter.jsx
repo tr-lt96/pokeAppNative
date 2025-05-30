@@ -15,6 +15,7 @@ import { UserPage } from "./src/pages/user/UserPage";
 import { useUser } from "./src/components/auth/context/AuthContext";
 import * as Linking from "expo-linking";
 import { TeamSharePage } from "./src/pages/team-info/TeamSharePage";
+import { TeamScanPage } from "./src/pages/team-info/TeamScanPage";
 
 const prefix = Linking.createURL("/");
 
@@ -50,18 +51,30 @@ const TeamsNavigationStack = () => {
       <TeamsStack.Screen
         name={screenNames.team.list._name}
         component={TeamListPage}
+        options={{
+          headerBackVisible: false,
+          title: "Team list",
+        }}
       />
       <TeamsStack.Screen
         name={screenNames.team.info._name}
         component={TeamInfoPage}
         options={{
-          title: "Team Info",
+          title: "Team info",
+        }}
+      />
+      <TeamsStack.Screen
+        name={screenNames.team.scan._name}
+        component={TeamScanPage}
+        options={{
+          title: "Copy team",
         }}
       />
       <TeamsStack.Screen
         name={screenNames.team.share._name}
         component={TeamSharePage}
         options={{
+          headerBackVisible: false,
           title: "Sharing is caring",
         }}
       />
@@ -149,7 +162,12 @@ export const AppRouter = () => {
 
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: false,
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      >
         {isAuth ? (
           // Home application
           <Stack.Screen

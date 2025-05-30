@@ -4,7 +4,7 @@
     "slug": "poketeam",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.jpg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -14,14 +14,27 @@
     },
     "scheme": "poketeam",
     "ios": {
-      "bundleIdentifier": "com.ifn666.poketeam"
+      "bundleIdentifier": "com.ifn666.poketeam",
+      "infoPlist": {
+        "NSCameraUsageDescription": "PokeTeam needs access to your Camera."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.jpg",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
-    }
+      "edgeToEdgeEnabled": true,
+      "permissions": ["android.permission.CAMERA", "android.permission.CAMERA"],
+      "package": "com.ifn666.poketeam"
+    },
+    "plugins": [
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "PokeTeam needs access to your Camera."
+        }
+      ]
+    ]
   }
 }

@@ -96,7 +96,7 @@ export const TeamShareInfo = ({ pokemons = [] }) => {
       <Text variant="heading-xl-strong">Team sharing</Text>
       <Text>Curious about other's team?</Text>
       <Container w={"100%"} p={0} mt={theme.spacing(3)}>
-        <Flex gap={theme.spacing(3)}>
+        <Flex gap={theme.spacing(3)} wrap={"wrap"}>
           <Button
             color="gray"
             variant="light"

@@ -5,6 +5,7 @@ import {
   Card,
   useTheme,
   Button,
+  useMessage,
 } from "../../components/shared/core";
 import { TeamListItem } from "../../components/team-info/TeamListItem";
 import { useUser } from "../../components/auth/context/AuthContext";
@@ -12,14 +13,27 @@ import { AddTeamAction } from "../../components/team-info/AddTeamAction";
 import { ScreenLayout } from "../ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import { screenNames } from "../../constants";
+import { useCameraPermission } from "react-native-vision-camera";
 
 export const TeamListPage = () => {
   const { theme } = useTheme();
   const { teams = [] } = useUser();
   const { navigate } = useNavigation();
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const { setUserAlert } = useMessage();
 
-  const testTeam = () => {
-    navigate(screenNames.team.share._name, { pokemons: "1-2-3-4-5-6" });
+  const handleNavigateToCameraPage = async () => {
+    let allowPermission = hasPermission;
+    if (!allowPermission) {
+      allowPermission = await requestPermission();
+    }
+
+    if (allowPermission) {
+      // navigate to camera page
+      navigate(screenNames.team.scan._name);
+    } else {
+      setUserAlert("Camera should be allowed to copy team", "warning");
+    }
   };
 
   return (
@@ -27,8 +41,17 @@ export const TeamListPage = () => {
       <Container w={"100%"} mt={theme.spacing(3)} p={0}>
         <Text variant={"heading-xl-strong"}>Teams</Text>
         <Text mb={theme.spacing(3)}>Every single team, all yours trully! </Text>
-
-        <AddTeamAction />
+        <Flex gap={theme.spacing(3)}>
+          <AddTeamAction />
+          <Button
+            radius={"md"}
+            color={"grape"}
+            variant={"light"}
+            onPress={handleNavigateToCameraPage}
+          >
+            Copy a team
+          </Button>
+        </Flex>
         <Flex
           w={"100%"}
           direction={"column"}

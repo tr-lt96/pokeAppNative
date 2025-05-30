@@ -48,13 +48,17 @@ export const Modal = ({ opened, onClose, children, title, ...modalProps }) => {
             <Flex w={"100%"} justify={"space-between"} align={"center"}>
               <View />
               {titleText}
-              <ActionIcon color={"transparent"} onPress={onClose} size={48}>
-                <MaterialIcons
-                  color={theme.colors.dark[6]}
-                  name={"close"}
-                  size={16}
-                />
-              </ActionIcon>
+              {onClose ? (
+                <ActionIcon color={"transparent"} onPress={onClose} size={48}>
+                  <MaterialIcons
+                    color={theme.colors.dark[6]}
+                    name={"close"}
+                    size={16}
+                  />
+                </ActionIcon>
+              ) : (
+                <View />
+              )}
             </Flex>
             <Container mt={theme.spacing(2)}>{children}</Container>
           </Card>

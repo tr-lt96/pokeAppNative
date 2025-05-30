@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 import {
   getColorWithOpacity,
   getThemeTokenFromColor,
@@ -7,6 +7,7 @@ import {
 } from "../../../../../functions/theme";
 import { useTheme } from "../../contexts/ThemeProvider";
 import { Text } from "../Text";
+import { Flex } from "../../layouts/Flex";
 
 function getButtonTextStyle({ theme, color, variant }) {
   const variantTextColor =
@@ -109,8 +110,16 @@ export const Button = (buttonProps) => {
     );
 
   return (
-    <TouchableOpacity style={buttonStyle} {...restProps}>
-      {ButtonContent}
-    </TouchableOpacity>
+    <Flex w={buttonStyle.width}>
+      <Pressable
+        style={({ pressed }) => ({
+          ...buttonStyle,
+          ...(pressed ? buttonPressStyle : {}),
+        })}
+        {...restProps}
+      >
+        {ButtonContent}
+      </Pressable>
+    </Flex>
   );
 };

@@ -39,8 +39,6 @@ export const PokemonSearchResults = () => {
       ? initSearchContextValue.pagination
       : pagination;
 
-    console.log({ currentPagination });
-
     try {
       if (searchMode === "type") {
         resultData = await getPokemonByTypeData(searchType, currentPagination);

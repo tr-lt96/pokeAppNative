@@ -28,6 +28,9 @@ export const screenNames = {
     share: {
       _name: "TeamShare",
     },
+    scan: {
+      _name: "TeamScan",
+    },
   },
   user: {
     _name: "User",
