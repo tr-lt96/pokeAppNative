@@ -31,7 +31,7 @@ export const loginUser = async ({ username, password }) => {
     const result = await fetchResult?.json();
 
     if (result?.error === "timeout") {
-      throw new Error("Time out while logging in");
+      throw new Error("Time out");
     }
 
     if (!result?.token) {
@@ -57,10 +57,11 @@ export const registerUser = async ({ username, email, password }) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
       headers,
+      timeout: 5000,
     });
 
     if (fetchResult?.status !== 201) {
@@ -70,6 +71,10 @@ export const registerUser = async ({ username, email, password }) => {
     const result = await fetchResult?.json();
 
     if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+
       throw new Error(result.error);
     }
 
@@ -100,7 +105,7 @@ export const updateUserPassword = async ({
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "PUT",
       body: JSON.stringify({
         currentPassword,
@@ -108,6 +113,7 @@ export const updateUserPassword = async ({
         confirmNewPassword,
       }),
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -117,6 +123,9 @@ export const updateUserPassword = async ({
     const result = await fetchResult?.json();
 
     if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
       throw new Error(result.error);
     }
 
@@ -143,9 +152,10 @@ export const logoutUser = async () => {
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", `Bearer ${token}`);
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "POST",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -155,6 +165,9 @@ export const logoutUser = async () => {
     const result = await fetchResult?.json();
 
     if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
       throw new Error("Issue while logging out");
     }
 

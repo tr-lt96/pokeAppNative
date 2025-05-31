@@ -1,6 +1,7 @@
 import mockTeams from "../_mock/data/teams.json";
 import { TOKEN_KEY } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchWithTimeout } from "./utils";
 
 export const getAllTeams = async () => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -18,9 +19,10 @@ export const getAllTeams = async () => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -30,7 +32,10 @@ export const getAllTeams = async () => {
     const teamsData = await fetchResult.json();
 
     if (!teamsData || teamsData.error) {
-      return null;
+      if (teamsData?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(teamsData.error);
     }
 
     return teamsData.map((team) => {
@@ -63,9 +68,10 @@ export const getTeamById = async (teamId, teams = []) => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -73,6 +79,13 @@ export const getTeamById = async (teamId, teams = []) => {
     }
 
     const teamData = await fetchResult?.json();
+
+    if (!teamData || teamData.error) {
+      if (teamData?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(teamData.error);
+    }
 
     return teamData;
   } catch (error) {
@@ -101,7 +114,7 @@ export const addNewTeam = async (teamName) => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify({
@@ -114,6 +127,13 @@ export const addNewTeam = async (teamName) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return {
       name: result.team.name,
@@ -142,9 +162,10 @@ export const deleteTeam = async (teamId) => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "DELETE",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -152,6 +173,13 @@ export const deleteTeam = async (teamId) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return result;
   } catch (error) {
@@ -176,10 +204,11 @@ export const addPokemonToTeam = async (pokemonName, teamId) => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify({ pokemonName: pokemonName }),
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -187,6 +216,13 @@ export const addPokemonToTeam = async (pokemonName, teamId) => {
     }
 
     const result = await fetchResult.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return result;
   } catch (error) {
@@ -211,7 +247,7 @@ export const evaluatePokemonTeam = async (teamId) => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
     });
@@ -222,8 +258,11 @@ export const evaluatePokemonTeam = async (teamId) => {
 
     const teamEvaluationData = await fetchResult?.json();
 
-    if (!teamEvaluationData) {
-      return null;
+    if (!teamEvaluationData || teamEvaluationData.error) {
+      if (teamEvaluationData?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(teamEvaluationData.error);
     }
 
     return {

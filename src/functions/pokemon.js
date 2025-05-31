@@ -1,5 +1,6 @@
 import { TOKEN_KEY } from "../constants";
 import teams from "../_mock/data/teams.json";
+import { fetchWithTimeout } from "./utils";
 
 export const getPokemonDataFromPokemonId = async (pokemonNameId) => {
   const result = await fetch(
@@ -41,9 +42,10 @@ export const getPokemonData = async (pokemonNameId) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -51,6 +53,13 @@ export const getPokemonData = async (pokemonNameId) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return result;
   } catch (error) {
@@ -72,9 +81,10 @@ export const getAllPokemonData = async ({ limit, offset }) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -82,6 +92,13 @@ export const getAllPokemonData = async ({ limit, offset }) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return result;
   } catch (error) {
@@ -103,7 +120,7 @@ export const getPokemonByTypeData = async (type, { limit, offset }) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
     });
@@ -113,6 +130,13 @@ export const getPokemonByTypeData = async (type, { limit, offset }) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (!result || result.error) {
+      if (result?.error === "timeout") {
+        throw new Error("Time out");
+      }
+      throw new Error(result.error);
+    }
 
     return result;
   } catch (error) {
