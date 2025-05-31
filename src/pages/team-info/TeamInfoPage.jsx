@@ -32,7 +32,7 @@ export const TeamInfoPage = () => {
       })
       .catch((error) => {
         setUserAlert("Error while fetching team data", "error");
-        console.error(error);
+        console.warn(error);
       });
   }, []);
 

@@ -1,5 +1,6 @@
 import { TOKEN_KEY } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchWithTimeout } from "./utils";
 
 export const loginUser = async ({ username, password }) => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -13,13 +14,14 @@ export const loginUser = async ({ username, password }) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify({
         usernameOrEmail: username,
         password,
       }),
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -27,6 +29,10 @@ export const loginUser = async ({ username, password }) => {
     }
 
     const result = await fetchResult?.json();
+
+    if (result?.error === "timeout") {
+      throw new Error("Time out while logging in");
+    }
 
     if (!result?.token) {
       throw new Error("Issue while logging in");
@@ -36,7 +42,7 @@ export const loginUser = async ({ username, password }) => {
       token: result.token,
     };
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -69,7 +75,7 @@ export const registerUser = async ({ username, email, password }) => {
 
     return true;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -116,7 +122,7 @@ export const updateUserPassword = async ({
 
     return true;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -154,7 +160,7 @@ export const logoutUser = async () => {
 
     return true;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return false;
   }
 };

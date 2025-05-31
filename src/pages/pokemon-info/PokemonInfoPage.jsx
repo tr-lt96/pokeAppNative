@@ -44,7 +44,7 @@ export const PokemonInfoPage = () => {
         setUserAlert(
           "Oh no, this pokemon ran away! Maybe try to find it again?"
         );
-        console.error(error);
+        console.warn(error);
         setLoading(false);
       });
   }, [pokemonName]);

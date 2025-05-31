@@ -4,6 +4,7 @@ import { useUser } from "../auth/context/AuthContext";
 import { addPokemonToTeam } from "../../functions/team";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { sendInAppNoti } from "../../functions/notification";
 
 const AddNewPokemon = ({ handleAddPokemon }) => {
   return (
@@ -44,6 +45,9 @@ export const PokemonTeamDisplay = ({
           if (teamToUpdate) {
             teamToUpdate.pokemons.push(currentPokemon);
             updateTeam(currentTeams);
+            sendInAppNoti(
+              `Added ${currentPokemon.name} to team ${teamToUpdate.name}`
+            );
           }
         } else {
           setUserAlert(
@@ -53,7 +57,7 @@ export const PokemonTeamDisplay = ({
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.warn(error);
         setUserAlert(
           "Oops, we had some issues bringing this pokemon to your gang.",
           "error"

@@ -9,7 +9,11 @@ import { getPokemonDisplayName } from "../../functions/utils";
 import { PokeIdBadge } from "../shared/info";
 import { Button, Container, Flex, useTheme, Text } from "../shared/core";
 
-export const PokemonInfo = ({ pokemonData = {}, loading, handleAddToTeam }) => {
+export const PokemonInfo = ({
+  pokemonData = {},
+  loading,
+  handleAddToTeam: handlePressAddToTeam,
+}) => {
   const { theme } = useTheme();
   const {
     stats,
@@ -30,7 +34,7 @@ export const PokemonInfo = ({ pokemonData = {}, loading, handleAddToTeam }) => {
           {/* Display Pokemon name and pokemon ID i.e. #025 */}
 
           {/* <Skeleton visible={loading} w={"fit-content"}> */}
-          <Button radius={"md"} onPress={handleAddToTeam}>
+          <Button radius={"md"} onPress={handlePressAddToTeam}>
             {"Add to your gang(s)"}
           </Button>
           {/* </Skeleton> */}

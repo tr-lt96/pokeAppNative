@@ -87,7 +87,7 @@ export const TeamTypeAnalysis = ({ teamPokemons, teamId }) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error(error);
+          console.warn(error);
           setErrorMsg(
             "Oopsie, we made some mistake and things are crashing. Time for a refresh!"
           );
@@ -111,7 +111,7 @@ export const TeamTypeAnalysis = ({ teamPokemons, teamId }) => {
       <Text variant={"heading-lg-strong"} mb={"md"}>
         Analysis chart
       </Text>
-      {teamPokemons.length > 0 && (
+      {teamPokemons.length > 0 && (weakChart || strongChart) && (
         <Container p={0}>
           <Flex direction={"column"} gap={"md"}>
             <TypeAnalysisChartInfo chart={weakChart} chartType={"weak"} />

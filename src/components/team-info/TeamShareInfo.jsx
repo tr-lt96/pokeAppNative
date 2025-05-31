@@ -72,6 +72,7 @@ export const TeamShareInfo = ({ pokemons = [] }) => {
     );
 
     if (teamToUpdate) {
+      teamToUpdate.pokemons = pokemons;
       updateTeam(currentTeams);
       setUserAlert("Successfully copy team, let's go to team page.", "success");
       navigate(screenNames.team.info._name, { teamId });

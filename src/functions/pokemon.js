@@ -54,7 +54,7 @@ export const getPokemonData = async (pokemonNameId) => {
 
     return result;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -85,7 +85,7 @@ export const getAllPokemonData = async ({ limit, offset }) => {
 
     return result;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -116,7 +116,7 @@ export const getPokemonByTypeData = async (type, { limit, offset }) => {
 
     return result;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };

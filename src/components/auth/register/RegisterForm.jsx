@@ -90,7 +90,7 @@ export const RegisterForm = () => {
             "We gave you a broken token, can you try logging in again?",
             "error"
           );
-          console.error("Auth token is broken");
+          console.warn("Auth token is broken");
           navigate(screenNames.login._name);
         }
       }

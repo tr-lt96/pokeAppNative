@@ -14,7 +14,7 @@ export const AddTeamAction = () => {
         Not enough team?
       </Button>
       <Modal title={"Create a new team"} opened={opened} onClose={close}>
-        <AddTeamForm handleCloseModal={() => close()} />
+        <AddTeamForm addTeamCallback={close} />
       </Modal>
     </>
   );

@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { searchPokemonByNameId } from "../../functions/pokemon";
 import {
   initSearchContextValue,
@@ -17,6 +17,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 export const SearchBar = () => {
   const { theme } = useTheme();
   const {
+    searchMode,
     setSearchQuery,
     setResultItems,
     setSearchMode,
@@ -29,6 +30,7 @@ export const SearchBar = () => {
     control,
     formState: { errors },
     setError,
+    resetField,
   } = useForm({
     defaultValues: {
       pokemonName: "",
@@ -81,6 +83,11 @@ export const SearchBar = () => {
     setSearchMode("type");
   };
 
+  const handleReset = () => {
+    resetField("pokemonName");
+    setSearchMode("all");
+  };
+
   return (
     <Card radius={"md"} w={"100%"}>
       <Flex
@@ -115,6 +122,17 @@ export const SearchBar = () => {
         />
 
         <Flex align={"center"} gap={theme.spacing(2)}>
+          {searchMode === "name" ? (
+            <ActionIcon
+              radius={"md"}
+              size={48}
+              onPress={handleReset}
+              variant="light"
+              color={"red"}
+            >
+              <MaterialIcons name={"close"} size={16} />
+            </ActionIcon>
+          ) : null}
           <ActionIcon
             radius={"md"}
             size={48}

@@ -3,6 +3,7 @@ import { getUser } from "../../../functions/user";
 import { getAllTeams } from "../../../functions/team";
 
 const initUser = {
+  loading: true,
   username: "",
   email: "",
   teams: [],
@@ -10,8 +11,9 @@ const initUser = {
   addTeam: (team) => {},
   updateTeam: (team) => {},
   deleteTeam: (teamId) => {},
-  setupUserContext: () => {},
+  setupUserContext: async () => {},
   resetUserContext: () => {},
+  setAuthLoading: () => {},
 };
 
 const UserContext = createContext(initUser);
@@ -110,18 +112,10 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  useState(() => {
-    // setLoading(false);
-    setupUserContext();
-  }, []);
-
-  if (loading) {
-    return null;
-  }
-
   return (
     <UserContext.Provider
       value={{
+        loading,
         teams: teams || [],
         username: user?.username,
         email: user?.email,
@@ -131,6 +125,7 @@ export const UserProvider = ({ children }) => {
         deleteTeam,
         setupUserContext,
         resetUserContext,
+        setAuthLoading: setLoading,
       }}
     >
       {children}

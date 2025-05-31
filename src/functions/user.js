@@ -1,5 +1,6 @@
 import { TOKEN_KEY } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchWithTimeout } from "./utils";
 
 export const getUser = async () => {
   if (process.env.EXPO_PUBLIC_ENV === "local") {
@@ -20,9 +21,10 @@ export const getUser = async () => {
     headers.append("Authorization", `Bearer ${token}`);
     headers.append("Content-Type", "application/json");
 
-    const fetchResult = await fetch(endpoint, {
+    const fetchResult = await fetchWithTimeout(endpoint, {
       method: "GET",
       headers,
+      timeout: 5000,
     });
 
     if (!fetchResult?.ok) {
@@ -30,6 +32,10 @@ export const getUser = async () => {
     }
 
     const userData = await fetchResult.json();
+
+    if (userData?.error === "timeout") {
+      throw new Error("Time out while logging in");
+    }
 
     if (!userData) {
       return null;
@@ -47,7 +53,7 @@ export const getUser = async () => {
       }),
     };
   } catch (error) {
-    console.error(error);
+    console.warn(error);
     return null;
   }
 };

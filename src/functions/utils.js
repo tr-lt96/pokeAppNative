@@ -22,3 +22,28 @@ export const capitalise = (str) => {
 export const getPokemonDisplayName = (name) => {
   return capitalise(name);
 };
+
+/**
+ * @param {string | URL | globalThis.Request} input
+ * @param {RequestInit & {timeout?: number} | undefined} init
+ */
+export const fetchWithTimeout = (input, init) => {
+  if (!init.timeout) {
+    return fetch(input, init);
+  }
+
+  return Promise.race([
+    fetch(input, init),
+    new Promise((res) => {
+      setTimeout(() => {
+        const response = new Response(
+          JSON.stringify({
+            error: "timeout",
+            message: "Timeout",
+          })
+        );
+        res(response);
+      }, init.timeout);
+    }),
+  ]);
+};

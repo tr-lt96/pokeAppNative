@@ -9,3 +9,6 @@ export const themeColor = {
 
 // Auth constants
 export const TOKEN_KEY = "pkm-user-token";
+
+// Noti constants
+export const NOTI_PERMISSION_KEY = "ask-noti-permission";

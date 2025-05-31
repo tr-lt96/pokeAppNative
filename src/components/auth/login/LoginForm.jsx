@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { ActivityIndicator } from "react-native";
+import { sendInAppNoti } from "../../../functions/notification";
 
 export const LoginForm = () => {
   const { theme } = useTheme();
@@ -50,12 +51,14 @@ export const LoginForm = () => {
       const { token } = result;
       if (token) {
         AsyncStorage.setItem(TOKEN_KEY, token);
-        setUserAlert(`Welcome, trainer ${values.username} 👋`, "success");
 
         const isAuth = await setupUserContext();
 
         if (!isAuth) {
           setUserAlert("Whoopsie, can you refresh the page?", "error");
+        } else {
+          setUserAlert(`Welcome, trainer ${values.username} 👋`, "success");
+          sendInAppNoti(`Your session is about to expired`, 28 * 60);
         }
       } else {
         setUserAlert(

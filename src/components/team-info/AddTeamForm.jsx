@@ -2,6 +2,8 @@ import { addNewTeam } from "../../functions/team";
 import { useUser } from "../auth/context/AuthContext";
 import { useMessage, Button, Flex, TextInput, useTheme } from "../shared/core";
 import { useForm, Controller } from "react-hook-form";
+import * as Notification from "expo-notifications";
+import { sendInAppNoti } from "../../functions/notification";
 
 export const AddTeamForm = ({ addTeamCallback, handleCloseModal }) => {
   const { addTeam: addTeamToContext } = useUser();
@@ -28,11 +30,12 @@ export const AddTeamForm = ({ addTeamCallback, handleCloseModal }) => {
           pokemons: [],
         });
         addTeamCallback?.(addTeamResult.teamId);
+        sendInAppNoti(`Team ${values.teamName} added.`);
       } else {
         setUserAlert("Oopsies, error while creating new team", "error");
       }
     } catch (error) {
-      console.error(error);
+      console.warn(error);
       setUserAlert("Oopsies, error while creating new team", "error");
     }
   };

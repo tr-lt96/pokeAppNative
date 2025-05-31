@@ -66,7 +66,7 @@ export const SearchTypeBar = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.warn(error);
         setUserAlert(
           "Pokedex search doesn't seems to be working. Perhaps it went out of battery?",
           "error"

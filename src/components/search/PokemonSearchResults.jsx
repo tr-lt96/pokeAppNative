@@ -69,7 +69,7 @@ export const PokemonSearchResults = () => {
         offset: currentPagination.offset + results.length,
       });
     } catch (error) {
-      console.error(error);
+      console.warn(error);
       setLoading(false);
       setUserAlert(
         "Pokedex search doesn't seems to be working. Perhaps it went out of battery?",
@@ -104,9 +104,10 @@ export const PokemonSearchResults = () => {
         // <Skeleton visible={loading}>
         <Button
           radius={"md"}
-          mx={theme.spacing(3)}
+          mx={theme.spacing(6)}
           visibleFrom={"md"}
           onPress={() => handleFetchBatchPokemon()}
+          flex={1}
         >
           See some more ?
         </Button>

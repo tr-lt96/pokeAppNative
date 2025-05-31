@@ -14,6 +14,7 @@ import {
   ActionIcon,
   useMessage,
   Modal,
+  Card,
 } from "../shared/core";
 import { PokemonInfoCard } from "../shared/info";
 
@@ -65,7 +66,7 @@ export const TeamInfo = ({ team }) => {
       }
     } catch (error) {
       if (error?.message !== "User did not share") {
-        console.error(error);
+        console.warn(error);
         setUserAlert(
           "Oops, this team is being shy, can you try again?",
           "error"
@@ -93,7 +94,7 @@ export const TeamInfo = ({ team }) => {
           }
         } catch (error) {
           if (error?.message !== "User did not share") {
-            console.error(error);
+            console.warn(error);
             setUserAlert(
               "Oops, this team is being shy, can you try again?",
               "error"
@@ -155,9 +156,9 @@ export const TeamInfo = ({ team }) => {
 
       <Container w={"100%"} p={0} mt={theme.spacing(3)}>
         {!isSharingByImage && pokemons.length < 6 && (
-          <Button radius={"md"} onPress={handleToSearch}>
-            Add more pokemons?
-          </Button>
+          <Card p={theme.spacing(2)} bgc={"indigo.1"}>
+            <Text c={"primary"}>Tips: Go to "Search" to add more pokemons</Text>
+          </Card>
         )}
         <ViewShot
           ref={teamInfoRef}

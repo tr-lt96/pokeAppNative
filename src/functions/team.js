@@ -41,7 +41,7 @@ export const getAllTeams = async () => {
       };
     });
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -76,7 +76,7 @@ export const getTeamById = async (teamId, teams = []) => {
 
     return teamData;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -121,7 +121,7 @@ export const addNewTeam = async (teamName) => {
       pokemons: [],
     };
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -155,7 +155,7 @@ export const deleteTeam = async (teamId) => {
 
     return result;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -190,7 +190,7 @@ export const addPokemonToTeam = async (pokemonName, teamId) => {
 
     return result;
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
@@ -232,7 +232,7 @@ export const evaluatePokemonTeam = async (teamId) => {
       weakChart: teamEvaluationData.weakChart,
     };
   } catch (error) {
-    console.error(`${error}`);
+    console.warn(`${error}`);
     return null;
   }
 };
