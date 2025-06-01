@@ -80,7 +80,15 @@ Wait until expo finish building the project.
 
 For the first time the app builds, in your iOS device's settings, navigate to `VPN & device management` section. You should be able to trust the app developer from there.
 
----
+### 5. Run development server
+
+In your terminal on Mac device, navigate to the root of this project, run:
+
+```bash
+npm run start
+```
+
+## Then scan the QR code in the terminal. This let your Expo server to connect to your development build
 
 ## Scripts
 
